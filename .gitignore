@@ -15,4 +15,5 @@ resources/lang/en
 resources/lang/id
 /.idea
 /.vscode
+.env
 # node_modules
