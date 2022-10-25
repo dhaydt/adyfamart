@@ -805,7 +805,7 @@
                                     href="javascript:">
                                     <i class="tio-user nav-icon"></i>
                                     <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
-                                            {{\App\CPU\translate('reseller')}}
+                                            {{\App\CPU\translate('Mitra')}}
                                         </span>
                                 </a>
                                 <ul class="js-navbar-vertical-aside-submenu nav nav-sub"
