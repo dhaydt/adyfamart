@@ -37,8 +37,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label for="name">{{\App\CPU\translate('Phone')}}</label>
-                                    <input type="text" name="phone" value="{{old('phone')}}" class="form-control" id="phone"
-                                        placeholder="{{\App\CPU\translate('Ex')}} : +628882********">
+                                    <input type="number" name="phone" value="{{old('phone')}}" class="form-control" id="phone"
+                                        placeholder="{{\App\CPU\translate('Ex')}} : 08882********">
                                 </div>
                             </div>
                         </div>
@@ -46,9 +46,9 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label for="name">{{\App\CPU\translate('Email')}}</label>
+                                    <label for="name">{{\App\CPU\translate('Email')}} <small class="text-danger">(optional)</small></label>
                                     <input type="email" name="email" value="{{old('email')}}" class="form-control" id="email"
-                                        placeholder="{{\App\CPU\translate('Ex')}} : ex@gmail.com" required>
+                                        placeholder="{{\App\CPU\translate('Ex')}} : ex@gmail.com">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="name">{{\App\CPU\translate('Address')}}</label>
@@ -60,7 +60,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label for="name">{{\App\CPU\translate('reseller_image')}}</label><span class="badge badge-soft-danger">( {{\App\CPU\translate('ratio')}} 1:1 )</span>
+                                    <label for="name">{{\App\CPU\translate('customer_image')}}</label><span class="badge badge-soft-danger">( {{\App\CPU\translate('ratio')}} 1:1 )</span>
                                     <br>
                                     <div class="form-group">
                                         <div class="custom-file text-left">

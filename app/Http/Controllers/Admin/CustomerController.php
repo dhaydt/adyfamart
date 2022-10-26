@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\CPU\Helpers;
+use function App\CPU\translate;
 use App\Http\Controllers\Controller;
 use App\Model\Order;
 use App\User;
@@ -17,6 +18,57 @@ class CustomerController extends Controller
         return view('admin-views.customer.add');
     }
 
+    public function post_customer_add(Request $request)
+    {
+        $numb = strval((int) $request['phone']);
+        $user = User::where('email', $request->email)->orWhere('phone', $request->phone)->first();
+        if (isset($user) && $user->is_phone_verified == 0 && $user->is_email_verified == 0) {
+            return redirect(route('customer.auth.check', [$user->id]));
+        }
+
+        // dd($request);
+
+        $request->validate([
+            'name' => 'required',
+            'phone' => 'required|unique:users',
+        ],
+            [
+                'name.required' => 'Nama Kostumer diperlukan!',
+                'phone.required' => 'Nomor HP Kostumer diperlukan!',
+            ]);
+
+        $id_reseller = session()->get('id_reseller');
+        $id_member = Helpers::memberId();
+
+        // dd($id_reseller, $id_member);
+
+        $user = User::create([
+            'f_name' => $request['name'],
+            'email' => $request['email'],
+            'phone' => $numb,
+            'reseller_id' => $id_reseller,
+            'id_member' => $id_member,
+            'added_by' => 'reseller',
+            'is_active' => 1,
+            'is_email_verified' => 1,
+            'password' => bcrypt(env('CUSTOMER_PASS')),
+        ]);
+        session()->put('pass', $request['password']);
+
+        // $phone_verification = Helpers::get_business_settings('phone_verification');
+        // $email_verification = Helpers::get_business_settings('email_verification');
+        // if ($phone_verification && !$user->is_phone_verified) {
+        //     return redirect(route('customer.auth.check', [$user->id]));
+        // }
+        // if ($email_verification && !$user->is_email_verified) {
+        //     return redirect(route('customer.auth.check', [$user->id]));
+        // }
+
+        Toastr::success(translate('customer_added_successfully'));
+
+        return redirect(route('admin.customer.list'));
+    }
+
     public function customer_list(Request $request)
     {
         $query_param = [];
@@ -24,7 +76,7 @@ class CustomerController extends Controller
         if (session()->get('admin_type') == 'reseller') {
             if ($request->has('search')) {
                 $key = explode(' ', $request['search']);
-                $customers = User::with(['orders'])->where(['added_by' => 'reseller', 'reseller_id' => auth('admin')->id()])
+                $customers = User::with(['orders'])->where(['added_by' => 'reseller', 'reseller_id' => session()->get('id_reseller')])
                     ->where(function ($q) use ($key) {
                         foreach ($key as $value) {
                             $q->orWhere('f_name', 'like', "%{$value}%")
@@ -35,7 +87,7 @@ class CustomerController extends Controller
                     });
                 $query_param = ['search' => $request['search']];
             } else {
-                $customers = User::with(['orders'])->where(['added_by' => 'reseller', 'reseller_id' => auth('admin')->id()]);
+                $customers = User::with(['orders'])->where(['added_by' => 'reseller', 'reseller_id' => session()->get('id_reseller')]);
             }
         } else {
             if ($request->has('search')) {

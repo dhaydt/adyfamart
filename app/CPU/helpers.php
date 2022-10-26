@@ -24,9 +24,17 @@ class Helpers
 {
     public static function resellerCode()
     {
-        $code_admin = 'RA'.(100000 + Admin::all()->count() + 1);
+        $code_admin = 'RA'.(1000 + Admin::all()->count() + 1);
 
         return $code_admin;
+    }
+
+    public static function memberId()
+    {
+        $mitra = session()->get('id_reseller');
+        $id = $mitra.(1000 + count(User::where('reseller_id', $mitra)->get()) + 1);
+
+        return $id;
     }
 
     public static function status($id)

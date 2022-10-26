@@ -26,6 +26,7 @@ class LoginController extends Controller
 
         if (auth('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
             session()->put('admin_type', auth('admin')->user()->admin_type);
+            session()->put('id_reseller', auth('admin')->user()->code_admin);
 
             return redirect()->route('admin.dashboard');
         }

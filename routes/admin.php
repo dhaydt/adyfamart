@@ -191,7 +191,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
 
         Route::group(['prefix' => 'customer', 'as' => 'customer.', 'middleware' => ['module:user_section']], function () {
             Route::get('add', 'CustomerController@customer_add')->name('add');
-            Route::post('add-new', 'CustomerController@customer_add')->name('add-new');
+            Route::post('add-new', 'CustomerController@post_customer_add')->name('add-new');
             Route::get('list', 'CustomerController@customer_list')->name('list');
             Route::post('status-update', 'CustomerController@status_update')->name('status-update');
             Route::get('view/{user_id}', 'CustomerController@view')->name('view');

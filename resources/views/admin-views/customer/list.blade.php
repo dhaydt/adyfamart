@@ -198,39 +198,43 @@
                         <th class="">
                            #
                         </th>
-                        <th class="table-column-pl-0">{{\App\CPU\translate('Name')}}</th>
-                        <th>{{\App\CPU\translate('Email')}}</th>
-                        <th>{{\App\CPU\translate('Phone')}}</th>
-                        <th>{{\App\CPU\translate('Total')}} {{\App\CPU\translate('Order')}} </th>
-                        <th>{{\App\CPU\translate('block')}} / {{\App\CPU\translate('unblock')}}</th>
-                        <th>{{\App\CPU\translate('Action')}}</th>
+                        <th class="table-column-pl-0 text-center">{{\App\CPU\translate('Name')}}</th>
+                        <th class="table-column-pl-0 text-center">{{\App\CPU\translate('ID_Member')}}</th>
+                        <th class="text-center">{{\App\CPU\translate('Email')}}</th>
+                        <th class="text-center">{{\App\CPU\translate('Phone')}}</th>
+                        <th class="text-center">{{\App\CPU\translate('Total')}} {{\App\CPU\translate('Order')}} </th>
+                        <th class="text-center">{{\App\CPU\translate('Active')}} / {{\App\CPU\translate('InActive')}}</th>
+                        <th class="text-center">{{\App\CPU\translate('Action')}}</th>
                     </tr>
                     </thead>
 
                     <tbody>
                     @foreach($customers as $key=>$customer)
                         <tr class="">
-                            <td class="">
+                            <td class="text-center">
                                 {{$customers->firstItem()+$key}}
                             </td>
                             <td class="table-column-pl-0">
                                 <a href="{{route('admin.customer.view',[$customer['id']])}}">
-                                    {{$customer['f_name']." ".$customer['l_name']}}
+                                    {{$customer['f_name']}}
                                 </a>
                             </td>
-                            <td>
+                            <td class="text-center">
+                                {{$customer['id_member']}}
+                            </td>
+                            <td class="text-center">
                                 {{$customer['email']}}
                             </td>
-                            <td>
-                               {{$customer['phone']}}
+                            <td class="text-center">
+                               +628{{$customer['phone']}}
                             </td>
-                            <td>
+                            <td class="text-center">
                                 <label class="badge badge-soft-info">
                                     {{$customer->orders->count()}}
                                 </label>
                             </td>
 
-                            <td>
+                            <td class="text-center">
                                 <label class="switch">
                                     <input type="checkbox" class="status"
                                            id="{{$customer['id']}}" {{$customer->is_active == 1?'checked':''}}>
@@ -238,7 +242,7 @@
                                 </label>
                             </td>
 
-                            <td>
+                            <td class="text-center">
                                 <div class="dropdown">
                                     <button class="btn btn-outline-secondary dropdown-toggle" type="button"
                                             id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
