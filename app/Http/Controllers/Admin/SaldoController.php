@@ -43,7 +43,7 @@ class SaldoController extends Controller
             $wallet->admin_id = $request['id_admin'];
             $wallet->saldo = $request['saldo'];
         } else {
-            $wallet->saldo += $request['saldo'];
+            $wallet->saldo = $request['saldo'];
         }
         $wallet->save();
         Toastr::success('Mitra saldo added successfully');
