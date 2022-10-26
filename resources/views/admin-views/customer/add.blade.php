@@ -31,34 +31,39 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-6">
+                                    <label for="name">{{\App\CPU\translate('ID_Member')}}</label>
+                                    <input type="text" name="id_member" class="form-control" id="id_member"
+                                        placeholder="" required>
+                                </div>
+                                <div class="col-md-6">
                                     <label for="name">{{\App\CPU\translate('Name')}}</label>
                                     <input type="text" name="name" class="form-control" id="name"
                                         placeholder="{{\App\CPU\translate('Ex')}} : {{\App\CPU\translate('Moh. Ali Imron')}}" value="{{old('name')}}" required>
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
                                 <div class="col-md-6">
                                     <label for="name">{{\App\CPU\translate('Phone')}}</label>
                                     <input type="number" name="phone" value="{{old('phone')}}" class="form-control" id="phone"
                                         placeholder="{{\App\CPU\translate('Ex')}} : 08882********">
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="row">
                                 <div class="col-md-6">
                                     <label for="name">{{\App\CPU\translate('Email')}} <small class="text-danger">(optional)</small></label>
                                     <input type="email" name="email" value="{{old('email')}}" class="form-control" id="email"
                                         placeholder="{{\App\CPU\translate('Ex')}} : ex@gmail.com">
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="name">{{\App\CPU\translate('Address')}}</label>
-                                    <textarea class="form-control" name="address" cols="30" rows="3"></textarea>
-                                </div>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="row">
+                                <div class="col-md-6">
+                                    <label for="name">{{\App\CPU\translate('Address')}}</label>
+                                    <textarea class="form-control" name="address" cols="30" rows="3"></textarea>
+                                </div>
                                 <div class="col-md-6">
                                     <label for="name">{{\App\CPU\translate('customer_image')}}</label><span class="badge badge-soft-danger">( {{\App\CPU\translate('ratio')}} 1:1 )</span>
                                     <br>

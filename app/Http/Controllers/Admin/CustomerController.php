@@ -38,7 +38,12 @@ class CustomerController extends Controller
             ]);
 
         $id_reseller = session()->get('id_reseller');
-        $id_member = Helpers::memberId();
+        $id_member = User::where('id_member', $request['id_member'])->first();
+        if ($id_member) {
+            Toastr::warning('ID Member Already exist!');
+
+            return redirect()->back()->withInput();
+        }
 
         // dd($id_reseller, $id_member);
 
@@ -47,7 +52,7 @@ class CustomerController extends Controller
             'email' => $request['email'],
             'phone' => $numb,
             'reseller_id' => $id_reseller,
-            'id_member' => $id_member,
+            'id_member' => $request['id_member'],
             'added_by' => 'reseller',
             'is_active' => 1,
             'is_email_verified' => 1,
