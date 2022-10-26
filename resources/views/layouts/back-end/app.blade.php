@@ -28,6 +28,9 @@
     @stack('css_or_js')
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
     <style>
+        .fs-15{
+            font-size: 15px;
+        }
         :root {
             --theameColor: #045cff;
         }

@@ -196,6 +196,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
             Route::post('status-update', 'CustomerController@status_update')->name('status-update');
             Route::get('view/{user_id}', 'CustomerController@view')->name('view');
         });
+
         ///Report
         Route::group(['prefix' => 'report', 'as' => 'report.', 'middleware' => ['module:report']], function () {
             Route::get('order', 'ReportController@order_index')->name('order');
@@ -213,6 +214,12 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
             Route::get('product-in-wishlist', 'ProductWishlistReportController@index')->name('product-in-wishlist');
             Route::post('piw-filter', 'ProductWishlistReportController@filter')->name('piw-filter');
         });
+
+        Route::group(['prefix' => 'saldo', 'as' => 'saldo.', 'middleware' => ['module:employee_section']], function () {
+            Route::get('/', 'SaldoController@list')->name('list');
+            Route::post('/add', 'SaldoController@saldoPost')->name('add');
+        });
+
         Route::group(['prefix' => 'sellers', 'as' => 'sellers.', 'middleware' => ['module:user_section']], function () {
             Route::get('seller-list', 'SellerController@index')->name('seller-list');
             Route::get('order-list/{seller_id}', 'SellerController@order_list')->name('order-list');

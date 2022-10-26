@@ -795,7 +795,7 @@
                     <!--reporting and analysis ends here-->
 
                         @if(\App\CPU\Helpers::module_permission_check('employee_section'))
-                            <li class="nav-item {{(Request::is('admin/employee*') || Request::is('admin/custom-role*') || Request::is('admin/reseller*'))?'scroll-here':''}}">
+                            <li class="nav-item {{(Request::is('admin/employee*') || Request::is('admin/custom-role*') || Request::is('admin/saldo*') || Request::is('admin/reseller*'))?'scroll-here':''}}">
                                 <small class="nav-subtitle">{{\App\CPU\translate('employee_section')}}</small>
                                 <small class="tio-more-horizontal nav-subtitle-replacer"></small>
                             </li>
@@ -803,7 +803,7 @@
                             <li class="navbar-vertical-aside-has-menu {{Request::is('admin/reseller*')?'active':''}}">
                                 <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle"
                                     href="javascript:">
-                                    <i class="tio-user nav-icon"></i>
+                                    <i class="fa-solid fa-users-line nav-icon fs-15"></i>
                                     <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
                                             {{\App\CPU\translate('Mitra')}}
                                         </span>
@@ -824,7 +824,14 @@
                                     </li>
                                 </ul>
                             </li>
-
+                            <li class="navbar-vertical-aside-has-menu {{Request::is('admin/saldo*')?'active':''}}">
+                                <a class="js-navbar-vertical-aside-menu-link nav-link"
+                                   href="{{route('admin.saldo.list')}}">
+                                   <i class="fa-solid fa-sack-dollar fs-15 nav-icon"></i>
+                                    <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                            {{\App\CPU\translate('mitras_saldo')}}</span>
+                                </a>
+                            </li>
                             <li class="navbar-vertical-aside-has-menu {{Request::is('admin/custom-role*')?'active':''}}">
                                 <a class="js-navbar-vertical-aside-menu-link nav-link"
                                    href="{{route('admin.custom-role.create')}}">
