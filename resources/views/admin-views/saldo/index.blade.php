@@ -77,8 +77,7 @@
                                                 {{\App\CPU\translate('View')}}
                                             </a> --}}
                                             <button type="button" class="btn btn-primary" onclick="addSaldo({{ $seller }})" data-toggle="modal" data-target="#modalSaldo">
-                                                <i class="fa-solid fa-plus"></i>
-                                                Saldo
+                                                Limit Saldo
                                             </button>
                                         </td>
                                     </tr>
@@ -93,7 +92,7 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Tambah Saldo Mitra</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Limit Saldo Mitra</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -111,13 +110,13 @@
                                         <input type="text" id="name_mitra" class="form-control" readonly name="name">
                                     </div>
                                     <div class="form-group">
-                                        <label for="id_admin">Saldo yang akan ditambah</label>
+                                        <label for="id_admin">Limit Saldo Mitra</label>
                                         <input type="number" class="form-control" name="saldo">
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Save saldo</button>
+                                <button type="submit" class="btn btn-primary">Simpan saldo</button>
                                 </div>
                             </form>
                             </div>
