@@ -226,7 +226,7 @@
                                 {{$customer['email']}}
                             </td>
                             <td class="text-center">
-                               +628{{$customer['phone']}}
+                                +628{{$customer['phone']}}
                             </td>
                             <td class="text-center">
                                 <label class="badge badge-soft-info">
@@ -237,7 +237,7 @@
                             <td class="text-center">
                                 <label class="switch">
                                     <input type="checkbox" class="status"
-                                           id="{{$customer['id']}}" {{$customer->is_active == 1?'checked':''}}>
+                                        id="{{$customer['id']}}" {{$customer->is_active == 1?'checked':''}}>
                                     <span class="slider round"></span>
                                 </label>
                             </td>
@@ -253,9 +253,9 @@
                                         <a class="dropdown-item" href="{{route('admin.customer.view',[$customer['id']])}}">
                                             <i class="tio-visible"></i> {{\App\CPU\translate('View')}}
                                         </a>
-                                        {{--<a class="dropdown-item" target="" href="">
-                                            <i class="tio-download"></i> Suspend
-                                        </a>--}}
+                                        <a class="dropdown-item" href="{{route('admin.customer.edit',[$customer['id']])}}">
+                                            <i class="tio-edit"></i> {{\App\CPU\translate('Edit')}}
+                                        </a>
                                     </div>
                                 </div>
                             </td>

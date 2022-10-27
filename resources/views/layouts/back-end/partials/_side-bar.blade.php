@@ -514,7 +514,7 @@
                             @endif
                             <li class="nav-item {{Request::is('admin/customer/add')?'active':''}}">
                                 <a class="nav-link " href="{{route('admin.customer.add')}}">
-                                    <span class="fa-solid fa-user-plus nav-icon"></span>
+                                    <span class="fa-solid fa-user-plus nav-icon fs-15"></span>
                                     <span
                                         class="text-truncate">{{\App\CPU\translate('add_customer')}} </span>
                                 </a>

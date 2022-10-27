@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\CPU\Helpers;
+use App\CPU\ImageManager;
 use function App\CPU\translate;
 use App\Http\Controllers\Controller;
 use App\Model\Order;
@@ -13,6 +14,55 @@ use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
 {
+    public function edit($id)
+    {
+        $data['customer'] = User::find($id);
+
+        return view('admin-views.customer.edit', $data);
+    }
+
+    public function editPost(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'phone' => 'required',
+        ], [
+            'name.required' => 'Nama is required!',
+            'phone.required' => 'Phone number is required!',
+        ]);
+
+        $e = User::find($request['id']);
+        if ($request['password'] == null) {
+            $pass = $e['password'];
+        } else {
+            if (strlen($request['password']) < 7) {
+                Toastr::warning('Password length must be 8 character.');
+
+                return back();
+            }
+            $pass = bcrypt($request['password']);
+        }
+
+        if ($request->has('image')) {
+            $e['image'] = ImageManager::update('profile/', $e['image'], 'png', $request->file('image'));
+        }
+
+        DB::table('users')->where(['id' => $request['id']])->update([
+            'f_name' => $request->name,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'id_member' => $request->id_member,
+            'street_address' => $request->address,
+            'password' => $pass,
+            'image' => $e['image'],
+            'updated_at' => now(),
+        ]);
+
+        Toastr::success('Customer updated successfully!');
+
+        return back();
+    }
+
     public function customer_add()
     {
         return view('admin-views.customer.add');
@@ -53,6 +103,7 @@ class CustomerController extends Controller
             'phone' => $numb,
             'reseller_id' => $id_reseller,
             'id_member' => $request['id_member'],
+            'street_address' => $request->address,
             'added_by' => 'reseller',
             'is_active' => 1,
             'is_email_verified' => 1,

@@ -1,8 +1,11 @@
 @extends('layouts.back-end.app')
-@section('title', \App\CPU\translate('Mitra Edit'))
+
+@section('title', \App\CPU\translate('Customer_Add'))
+
 @push('css_or_js')
-    <link href="{{asset('public/assets/back-end')}}/css/select2.min.css" rel="stylesheet"/>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+<link href="{{asset('public/assets/back-end')}}/css/select2.min.css" rel="stylesheet"/>
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
 @endpush
 
 @section('content')
@@ -10,7 +13,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">{{\App\CPU\translate('Dashboard')}}</a></li>
-            <li class="breadcrumb-item" aria-current="page">{{\App\CPU\translate('Mitra')}} {{\App\CPU\translate('Update')}} </li>
+            <li class="breadcrumb-item" aria-current="page">{{\App\CPU\translate('customer_add')}}</li>
         </ol>
     </nav>
 
@@ -19,39 +22,37 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    {{\App\CPU\translate('Mitra')}} {{\App\CPU\translate('Update')}} {{\App\CPU\translate('form')}}
+                    {{\App\CPU\translate('customer_form')}}
                 </div>
                 <div class="card-body">
-                    <form action="{{route('admin.reseller.update',[$e['id']])}}" method="post" enctype="multipart/form-data"
-                          style="text-align: {{Session::get('direction') === "rtl" ? 'right' : 'left'}};">
+                    <form action="{{route('admin.customer.edit.post')}}" method="post" enctype="multipart/form-data"
+                        style="text-align: {{Session::get('direction') === "rtl" ? 'right' : 'left'}};">
                         @csrf
+                        <input type="hidden" name="id" value="{{ $customer->id }}">
                         <div class="form-group">
                             <div class="row">
+                                <div class="col-md-6">
+                                    <label for="name">{{\App\CPU\translate('ID_Member')}}</label>
+                                    <input type="text" name="id_member" class="form-control" id="id_member"
+                                        value="{{ $customer->id_member }}" required>
+                                </div>
                                 <div class="col-md-6">
                                     <label for="name">{{\App\CPU\translate('Name')}}</label>
-                                    <input type="text" name="name" value="{{$e['name']}}" class="form-control" id="name"
-                                           placeholder="{{\App\CPU\translate('Ex')}} : {{\App\CPU\translate('Md. Al Imrun')}}">
+                                    <input type="text" name="name" class="form-control" id="name"
+                                        value="{{$customer->f_name}}" required>
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
                                 <div class="col-md-6">
                                     <label for="name">{{\App\CPU\translate('Phone')}}</label>
-                                    <input type="text" value="{{$e['phone']}}" required name="phone" class="form-control" id="phone"
-                                           placeholder="{{\App\CPU\translate('Ex')}} : +88017********">
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="name">{{\App\CPU\translate('Email')}}</label>
-                                    <input type="email" value="{{$e['email']}}" name="email" class="form-control" id="email"
-                                        placeholder="{{\App\CPU\translate('Ex')}} : ex@gmail.com">
+                                    <input type="number" name="phone" value="{{$customer->phone}}" class="form-control" id="phone">
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="name">{{\App\CPU\translate('Password')}}</label><small> ( {{\App\CPU\translate('input if you want to change')}} )</small>
-                                    <input type="password" name="password" class="form-control" id="password"
-                                           placeholder="{{\App\CPU\translate('Password')}}">
+                                    <label for="name">{{\App\CPU\translate('Email')}} <small class="text-danger">(optional)</small></label>
+                                    <input type="email" name="email" value="{{ $customer->email }}" class="form-control" id="email">
                                 </div>
                             </div>
                         </div>
@@ -59,8 +60,21 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-6">
+                                    <label for="name">{{\App\CPU\translate('Password')}}</label>
+                                    <input type="password" name="password" value="" class="form-control" id="password">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="name">{{\App\CPU\translate('Address')}}</label>
+                                    <textarea class="form-control" name="address" cols="30" rows="3">{{ $customer->street_address }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="name">{{\App\CPU\translate('customer_image')}}</label><span class="badge badge-soft-danger">( {{\App\CPU\translate('ratio')}} 1:1 )</span>
+                                    <br>
                                     <div class="form-group">
-                                        <label for="name">{{\App\CPU\translate('mitra_image')}}</label><span class="badge badge-soft-danger">( {{\App\CPU\translate('ratio')}} 1:1 )</span>
                                         <div class="custom-file text-left">
                                             <input type="file" name="image" id="customFileUpload" class="custom-file-input"
                                                 accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
@@ -70,24 +84,20 @@
                                     <div class="text-center">
                                         <img style="width: auto;border: 1px solid; border-radius: 10px; max-height:200px;" id="viewer"
                                         onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
-                                        src="{{asset('storage/app/public/admin')}}/{{$e['image']}}" alt="Employee thumbnail"/>
+                                        src="{{asset('storage/app/public/profile')}}/{{$customer['image']}}" alt="Customer thumbnail"/>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="card-footer pl-0">
-                            <button type="submit" class="btn btn-primary">{{\App\CPU\translate('Update')}}</button>
+                        <div class="row px-4">
+                            <button type="submit" class="btn btn-primary ml-auto">{{\App\CPU\translate('Update')}}</button>
                         </div>
+
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
-    <!--modal-->
-    @include('shared-partials.image-process._image-crop-modal',['modal_id'=>'employee-image-modal'])
-    <!--modal-->
 </div>
 @endsection
 
@@ -110,7 +120,6 @@
             readURL(this);
         });
 
-
         $(".js-example-theme-single").select2({
             theme: "classic"
         });
@@ -119,12 +128,4 @@
             width: 'resolve'
         });
     </script>
-
-    @include('shared-partials.image-process._script',[
-   'id'=>'employee-image-modal',
-   'height'=>200,
-   'width'=>200,
-   'multi_image'=>false,
-   'route'=>route('image-upload')
-   ])
 @endpush

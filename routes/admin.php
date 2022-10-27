@@ -195,6 +195,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
             Route::get('list', 'CustomerController@customer_list')->name('list');
             Route::post('status-update', 'CustomerController@status_update')->name('status-update');
             Route::get('view/{user_id}', 'CustomerController@view')->name('view');
+            Route::get('edit/{user_id}', 'CustomerController@edit')->name('edit');
+            Route::post('editPost', 'CustomerController@editPost')->name('edit.post');
         });
 
         ///Report
