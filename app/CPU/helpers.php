@@ -24,7 +24,7 @@ class Helpers
 {
     public static function resellerCode()
     {
-        $code_admin = 'RA'.(1000 + Admin::all()->count() + 1);
+        $code_admin = 'AM'.(10000 + Admin::all()->count() + 1);
 
         return $code_admin;
     }

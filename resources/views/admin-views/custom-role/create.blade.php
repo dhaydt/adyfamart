@@ -90,6 +90,15 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group form-check">
+                                        <input type="checkbox" name="modules[]" value="mitra_section"
+                                               class="form-check-input"
+                                               id="mitra_section">
+                                        <label class="form-check-label" style="{{Session::get('direction') === "rtl" ? 'margin-right: 1.25rem;' : ''}};"
+                                               for="mitra_section">{{\App\CPU\translate('mitra_section')}}</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group form-check">
                                         <input type="checkbox" name="modules[]" value="support_section"
                                                class="form-check-input"
                                                id="support_section">
@@ -106,6 +115,9 @@
                                                for="business_settings">{{\App\CPU\translate('Business_Settings')}}</label>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group form-check">
                                         <input type="checkbox" name="modules[]" value="web_&_app_settings"
@@ -115,9 +127,6 @@
                                                for="web_&_app_settings">{{\App\CPU\translate('Web_&_App_Settings')}}</label>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group form-check">
                                         <input type="checkbox" name="modules[]" value="report" class="form-check-input"

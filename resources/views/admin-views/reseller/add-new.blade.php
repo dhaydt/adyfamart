@@ -71,7 +71,7 @@
                                             src="{{asset('public\assets\back-end\img\400x400\img2.jpg')}}" alt="Product thumbnail"/>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <label for="name">{{\App\CPU\translate('Role')}}</label>
                                     <select class="form-control" name="role_id"
                                             style="width: 100%">
@@ -80,7 +80,7 @@
                                             <option value="{{$r->id}}">{{$r->name}}</option>
                                         @endforeach
                                     </select>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                         <div class="row px-4">

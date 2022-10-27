@@ -83,7 +83,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
             Route::post('update/{id}', 'EmployeeController@update');
         });
 
-        Route::group(['prefix' => 'reseller', 'as' => 'reseller.', 'middleware' => ['module:employee_section']], function () {
+        Route::group(['prefix' => 'reseller', 'as' => 'reseller.', 'middleware' => ['module:mitra_section']], function () {
             Route::get('add-new', 'ResellerController@add_new')->name('add-new');
             Route::post('add-new', 'ResellerController@store');
             Route::get('list', 'ResellerController@list')->name('list');

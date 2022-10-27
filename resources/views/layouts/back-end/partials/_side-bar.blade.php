@@ -439,6 +439,46 @@
                         @endif
                     <!--business section ends here-->
 
+                    @if(\App\CPU\Helpers::module_permission_check('mitra_section'))
+                    <li class="nav-item {{(Request::is('admin/custom-role*') || Request::is('admin/saldo*') || Request::is('admin/reseller*'))?'scroll-here':''}}">
+                        <small class="nav-subtitle">{{\App\CPU\translate('mitra_section')}}</small>
+                        <small class="tio-more-horizontal nav-subtitle-replacer"></small>
+                    </li>
+
+                    <li class="navbar-vertical-aside-has-menu {{Request::is('admin/reseller*')?'active':''}}">
+                        <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle"
+                            href="javascript:">
+                            <i class="fa-solid fa-users-line nav-icon fs-15"></i>
+                            <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                    {{\App\CPU\translate('Mitra')}}
+                                </span>
+                        </a>
+                        <ul class="js-navbar-vertical-aside-submenu nav nav-sub"
+                            style="display: {{Request::is('admin/reseller*')?'block':'none'}}">
+                            <li class="nav-item {{Request::is('admin/reseller/add-new')?'active':''}}">
+                                <a class="nav-link " href="{{route('admin.reseller.add-new')}}">
+                                    <span class="tio-circle nav-indicator-icon"></span>
+                                    <span class="text-truncate">{{\App\CPU\translate('add_new')}}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item {{Request::is('admin/reseller/list')?'active':''}}">
+                                <a class="nav-link" href="{{route('admin.reseller.list')}}">
+                                    <span class="tio-circle nav-indicator-icon"></span>
+                                    <span class="text-truncate">{{\App\CPU\translate('List')}}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="navbar-vertical-aside-has-menu {{Request::is('admin/saldo*')?'active':''}}">
+                        <a class="js-navbar-vertical-aside-menu-link nav-link"
+                           href="{{route('admin.saldo.list')}}">
+                           <i class="fa-solid fa-sack-dollar fs-15 nav-icon"></i>
+                            <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                    {{\App\CPU\translate('mitras_saldo')}}</span>
+                        </a>
+                    </li>
+                @endif
+
                         @if(\App\CPU\Helpers::module_permission_check('user_section'))
                             <li class="nav-item {{(Request::is('admin/customer/list') || Request::is('admin/sellers/seller-list'))?'scroll-here':''}}">
                                 <small class="nav-subtitle" title="">{{\App\CPU\translate('user_section')}}</small>
@@ -597,36 +637,6 @@
                                 </a>
                             </li>
 
-{{--                            <li class="navbar-vertical-aside-has-menu {{Request::is('admin/business-settings/language*')?'active':''}}">--}}
-{{--                                <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle"--}}
-{{--                                   href="javascript:">--}}
-{{--                                    <i class="tio-book-opened nav-icon"></i>--}}
-{{--                                    <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">--}}
-{{--                                        {{\App\CPU\translate('languages')}}--}}
-{{--                                    </span>--}}
-{{--                                </a>--}}
-{{--                                <ul class="js-navbar-vertical-aside-submenu nav nav-sub"--}}
-{{--                                    style="display: {{Request::is('admin/business-settings/language*')?'block':'none'}}">--}}
-{{--                                    <li class="nav-item {{Request::is('admin/business-settings/language-app')?'active':''}}">--}}
-{{--                                        <a class="nav-link"--}}
-{{--                                           href="{{route('admin.business-settings.language.index-app')}}">--}}
-{{--                                            <span class="tio-circle nav-indicator-icon"></span>--}}
-{{--                                            <span class="text-truncate">--}}
-{{--                                              {{\App\CPU\translate('for_data_entry')}}--}}
-{{--                                            </span>--}}
-{{--                                        </a>--}}
-{{--                                    </li>--}}
-{{--                                    <li class="nav-item {{Request::is('admin/business-settings/language')?'active':''}}">--}}
-{{--                                        <a class="nav-link"--}}
-{{--                                           href="{{route('admin.business-settings.language.index')}}">--}}
-{{--                                            <span class="tio-circle nav-indicator-icon"></span>--}}
-{{--                                            <span class="text-truncate">--}}
-{{--                                               {{\App\CPU\translate('for_website')}}--}}
-{{--                                            </span>--}}
-{{--                                        </a>--}}
-{{--                                    </li>--}}
-{{--                                </ul>--}}
-{{--                            </li>--}}
                             <li class="navbar-vertical-aside-has-menu {{Request::is('admin/social-login/view')?'active':''}}">
                                 <a class="js-navbar-vertical-aside-menu-link nav-link"
                                    href="{{route('admin.social-login.view')}}">
@@ -795,43 +805,11 @@
                     <!--reporting and analysis ends here-->
 
                         @if(\App\CPU\Helpers::module_permission_check('employee_section'))
-                            <li class="nav-item {{(Request::is('admin/employee*') || Request::is('admin/custom-role*') || Request::is('admin/saldo*') || Request::is('admin/reseller*'))?'scroll-here':''}}">
+                            <li class="nav-item {{(Request::is('admin/employee*') || Request::is('admin/custom-role*'))?'scroll-here':''}}">
                                 <small class="nav-subtitle">{{\App\CPU\translate('employee_section')}}</small>
                                 <small class="tio-more-horizontal nav-subtitle-replacer"></small>
                             </li>
 
-                            <li class="navbar-vertical-aside-has-menu {{Request::is('admin/reseller*')?'active':''}}">
-                                <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle"
-                                    href="javascript:">
-                                    <i class="fa-solid fa-users-line nav-icon fs-15"></i>
-                                    <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
-                                            {{\App\CPU\translate('Mitra')}}
-                                        </span>
-                                </a>
-                                <ul class="js-navbar-vertical-aside-submenu nav nav-sub"
-                                    style="display: {{Request::is('admin/reseller*')?'block':'none'}}">
-                                    <li class="nav-item {{Request::is('admin/reseller/add-new')?'active':''}}">
-                                        <a class="nav-link " href="{{route('admin.reseller.add-new')}}">
-                                            <span class="tio-circle nav-indicator-icon"></span>
-                                            <span class="text-truncate">{{\App\CPU\translate('add_new')}}</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item {{Request::is('admin/reseller/list')?'active':''}}">
-                                        <a class="nav-link" href="{{route('admin.reseller.list')}}">
-                                            <span class="tio-circle nav-indicator-icon"></span>
-                                            <span class="text-truncate">{{\App\CPU\translate('List')}}</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="navbar-vertical-aside-has-menu {{Request::is('admin/saldo*')?'active':''}}">
-                                <a class="js-navbar-vertical-aside-menu-link nav-link"
-                                   href="{{route('admin.saldo.list')}}">
-                                   <i class="fa-solid fa-sack-dollar fs-15 nav-icon"></i>
-                                    <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
-                                            {{\App\CPU\translate('mitras_saldo')}}</span>
-                                </a>
-                            </li>
                             <li class="navbar-vertical-aside-has-menu {{Request::is('admin/custom-role*')?'active':''}}">
                                 <a class="js-navbar-vertical-aside-menu-link nav-link"
                                    href="{{route('admin.custom-role.create')}}">

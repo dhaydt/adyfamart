@@ -1,5 +1,5 @@
 @extends('layouts.back-end.app')
-@section('title', \App\CPU\translate('Employee Edit'))
+@section('title', \App\CPU\translate('Mitra Edit'))
 @push('css_or_js')
     <link href="{{asset('public/assets/back-end')}}/css/select2.min.css" rel="stylesheet"/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -10,7 +10,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">{{\App\CPU\translate('Dashboard')}}</a></li>
-            <li class="breadcrumb-item" aria-current="page">{{\App\CPU\translate('Employee')}} {{\App\CPU\translate('Update')}} </li>
+            <li class="breadcrumb-item" aria-current="page">{{\App\CPU\translate('Mitra')}} {{\App\CPU\translate('Update')}} </li>
         </ol>
     </nav>
 
@@ -19,10 +19,10 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    {{\App\CPU\translate('Employee')}} {{\App\CPU\translate('Update')}} {{\App\CPU\translate('form')}}
+                    {{\App\CPU\translate('Mitra')}} {{\App\CPU\translate('Update')}} {{\App\CPU\translate('form')}}
                 </div>
                 <div class="card-body">
-                    <form action="{{route('admin.employee.update',[$e['id']])}}" method="post" enctype="multipart/form-data"
+                    <form action="{{route('admin.reseller.update',[$e['id']])}}" method="post" enctype="multipart/form-data"
                           style="text-align: {{Session::get('direction') === "rtl" ? 'right' : 'left'}};">
                         @csrf
                         <div class="form-group">
@@ -49,30 +49,18 @@
                                            placeholder="{{\App\CPU\translate('Ex')}} : ex@gmail.com">
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="name">{{\App\CPU\translate('Role')}}</label>
-                                    <select class="form-control" name="role_id"
-                                            style="width: 100%" >
-                                            <option value="0" selected disabled>---{{\App\CPU\translate('select')}}---</option>
-                                            @foreach($rls as $r)
-                                                <option
-                                                    value="{{$r->id}}" {{$r['id']==$e['admin_role_id']?'selected':''}}>{{$r->name}}</option>
-                                            @endforeach
-                                    </select>
+                                    <label for="name">{{\App\CPU\translate('Password')}}</label><small> ( {{\App\CPU\translate('input if you want to change')}} )</small>
+                                    <input type="password" name="password" class="form-control" id="password"
+                                           placeholder="{{\App\CPU\translate('Password')}}">
                                 </div>
-
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label for="name">{{\App\CPU\translate('Password')}}</label><small> ( {{\App\CPU\translate('input if you want to change')}} )</small>
-                                    <input type="password" name="password" class="form-control" id="password"
-                                           placeholder="{{\App\CPU\translate('Password')}}">
-                                </div>
-                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="name">{{\App\CPU\translate('employee_image')}}</label><span class="badge badge-soft-danger">( {{\App\CPU\translate('ratio')}} 1:1 )</span>
+                                        <label for="name">{{\App\CPU\translate('mitra_image')}}</label><span class="badge badge-soft-danger">( {{\App\CPU\translate('ratio')}} 1:1 )</span>
                                         <div class="custom-file text-left">
                                             <input type="file" name="image" id="customFileUpload" class="custom-file-input"
                                                 accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
