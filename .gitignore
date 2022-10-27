@@ -13,6 +13,7 @@ npm-debug.log
 yarn-error.log
 resources/lang/en
 resources/lang/id
+storage/logs
 /.idea
 /.vscode
 .env
