@@ -558,9 +558,18 @@
                     <!--support section ends here-->
 
                         @if(\App\CPU\Helpers::module_permission_check('business_settings'))
-                            <li class="nav-item {{(Request::is('admin/currency/view') || Request::is('admin/business-settings/language*') || Request::is('admin/business-settings/shipping-method*') || Request::is('admin/business-settings/payment-method') || Request::is('admin/business-settings/seller-settings*'))?'scroll-here':''}}">
+                            <li class="nav-item {{(Request::is('admin/business-settings/mitra-settings*') || Request::is('admin/currency/view') || Request::is('admin/business-settings/language*') || Request::is('admin/business-settings/shipping-method*') || Request::is('admin/business-settings/payment-method') || Request::is('admin/business-settings/seller-settings*'))?'scroll-here':''}}">
                                 <small class="nav-subtitle" title="">{{\App\CPU\translate('business_settings')}}</small>
                                 <small class="tio-more-horizontal nav-subtitle-replacer"></small>
+                            </li>
+                            <li class="navbar-vertical-aside-has-menu {{Request::is('admin/business-settings/mitra-settings*')?'active':''}}">
+                                <a class="js-navbar-vertical-aside-menu-link nav-link"
+                                   href="{{route('admin.business-settings.mitra-settings.index')}}">
+                                    <i class="tio-user-big-outlined nav-icon"></i>
+                                    <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                        {{\App\CPU\translate('mitra_settings')}}
+                                    </span>
+                                </a>
                             </li>
                             <li class="navbar-vertical-aside-has-menu {{Request::is('admin/business-settings/seller-settings*')?'active':''}}">
                                 <a class="js-navbar-vertical-aside-menu-link nav-link"

@@ -340,6 +340,11 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
                 Route::post('update-seller-registration', 'BusinessSettingsController@seller_registration')->name('update-seller-registration');
             });
 
+            Route::group(['prefix' => 'mitra-settings', 'as' => 'mitra-settings.', 'middleware' => ['module:business_settings']], function () {
+                Route::get('/', 'BusinessSettingsController@mitra_settings')->name('index');
+                Route::post('update-mitra-settings', 'BusinessSettingsController@admin_fee')->name('update-mitra-settings');
+            });
+
             Route::group(['prefix' => 'payment-method', 'as' => 'payment-method.', 'middleware' => ['module:business_settings']], function () {
                 Route::get('/', 'PaymentMethodController@index')->name('index');
                 Route::post('{name}', 'PaymentMethodController@update')->name('update');

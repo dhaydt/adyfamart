@@ -17,6 +17,27 @@ class BusinessSettingsController extends Controller
         return view('admin-views.business-settings.general-settings');
     }
 
+    public function mitra_settings()
+    {
+        $sales_commission = BusinessSetting::where('type', 'admin_fee')->first();
+        if (!isset($sales_commission)) {
+            DB::table('business_settings')->insert(['type' => 'admin_fee', 'value' => 0]);
+        }
+
+        return view('admin-views.business-settings.mitra-settings');
+    }
+
+    public function admin_fee(Request $request)
+    {
+        $admin_fee = BusinessSetting::where('type', 'admin_fee')->first();
+        $admin_fee->value = $request->commission;
+        $admin_fee->save();
+
+        Toastr::success('Admin_fee updated successfully!!');
+
+        return redirect()->back();
+    }
+
     public function about_us()
     {
         $about_us = BusinessSetting::where('type', 'about_us')->first();
