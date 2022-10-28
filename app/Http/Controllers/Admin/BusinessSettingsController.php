@@ -33,7 +33,7 @@ class BusinessSettingsController extends Controller
         $admin_fee->value = $request->commission;
         $admin_fee->save();
 
-        Toastr::success('Admin_fee updated successfully!!');
+        Toastr::success('Admin Fee updated successfully!!');
 
         return redirect()->back();
     }
