@@ -571,7 +571,7 @@
                                     </span>
                                 </a>
                             </li>
-                            <li class="navbar-vertical-aside-has-menu {{Request::is('admin/business-settings/seller-settings*')?'active':''}}">
+                            {{-- <li class="navbar-vertical-aside-has-menu {{Request::is('admin/business-settings/seller-settings*')?'active':''}}">
                                 <a class="js-navbar-vertical-aside-menu-link nav-link"
                                    href="{{route('admin.business-settings.seller-settings.index')}}">
                                     <i class="tio-user-big-outlined nav-icon"></i>
@@ -579,7 +579,7 @@
                                         {{\App\CPU\translate('seller_settings')}}
                                     </span>
                                 </a>
-                            </li>
+                            </li> --}}
                             <li class="navbar-vertical-aside-has-menu {{Request::is('admin/business-settings/payment-method')?'active':''}}">
                                 <a class="js-navbar-vertical-aside-menu-link nav-link"
                                    href="{{route('admin.business-settings.payment-method.index')}}">
