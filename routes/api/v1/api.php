@@ -52,6 +52,8 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => ['api_l
     });
 
     Route::get('country', 'AttributeController@country');
+    Route::get('about_us', 'AttributeController@about_us');
+    Route::get('privacy_policy', 'AttributeController@privacy_policy');
     Route::get('short-country', 'AttributeController@short_country');
 
     Route::get('faq', 'GeneralController@faq');
@@ -110,7 +112,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => ['api_l
 
     Route::group(['prefix' => 'customer', 'middleware' => 'auth:api'], function () {
         Route::get('info', 'CustomerController@info');
-        Route::put('update-profile', 'CustomerController@update_profile');
+        Route::post('update-profile', 'CustomerController@update_profile');
         Route::put('cm-firebase-token', 'CustomerController@update_cm_firebase_token');
 
         Route::group(['prefix' => 'address'], function () {
@@ -136,6 +138,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => ['api_l
             Route::get('list', 'CustomerController@get_order_list');
             Route::get('details', 'CustomerController@get_order_details');
             Route::get('place', 'OrderController@place_order');
+            Route::get('cancel/{id}', 'OrderController@order_cancel');
         });
         // Chatting
         Route::group(['prefix' => 'chat'], function () {

@@ -2,20 +2,54 @@
 
 namespace App\Http\Controllers\api\v1;
 
+use App\Country;
 use App\Http\Controllers\Controller;
 use App\Model\Attribute;
-use Illuminate\Http\Request;
+use App\Model\BusinessSetting;
 use Illuminate\Support\Facades\DB;
-use App\Country;
 
 class AttributeController extends Controller
 {
+    public function about_us()
+    {
+        $about_us = BusinessSetting::where('type', 'about_us')->first();
+        $resp = [
+            'status' => 'success',
+            'data' => $about_us->value,
+        ];
+
+        return response()->json($resp, 200);
+    }
+
+    public function privacy_policy()
+    {
+        $privacy_policy = BusinessSetting::where('type', 'privacy_policy')->first();
+        $resp = [
+            'status' => 'success',
+            'data' => $privacy_policy->value,
+        ];
+
+        return response()->json($resp, 200);
+    }
+
+    public function contact_us()
+    {
+        $privacy_policy = BusinessSetting::where('type', 'privacy_policy')->first();
+        $resp = [
+            'status' => 'success',
+            'data' => $privacy_policy->value,
+        ];
+
+        return response()->json($resp, 200);
+    }
+
     public function get_attributes()
     {
         $attributes = Attribute::all();
-        return response()->json($attributes,200);
+
+        return response()->json($attributes, 200);
     }
-    
+
     public function short_country()
     {
         $country = Country::with('product')->has('product')->get();
@@ -25,8 +59,8 @@ class AttributeController extends Controller
 
         return response()->json($count, 200);
     }
-    
-     public function country()
+
+    public function country()
     {
         $country = DB::table('country')->get();
         $count = $country->map(function ($country) {
