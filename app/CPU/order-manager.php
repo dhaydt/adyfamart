@@ -5,7 +5,6 @@ namespace App\CPU;
 use App\Model\Admin;
 use App\Model\AdminWallet;
 use App\Model\Cart;
-use App\Model\CartShipping;
 use App\Model\Order;
 use App\Model\OrderDetail;
 use App\Model\OrderTransaction;
@@ -279,8 +278,9 @@ class OrderManager
             'order_amount' => CartManager::cart_grand_total($cart_group_id) - $discount,
             'shipping_address' => $address_id,
             'shipping_address_data' => ShippingAddress::find($address_id),
-            'shipping_cost' => CartManager::get_shipping_cost($data['cart_group_id']),
-            'shipping_method_id' => CartShipping::where(['cart_group_id' => $cart_group_id])->first()->shipping_method_id,
+            'shipping_cost' => 0,
+            'shipping_method_id' => 0,
+            'id_mitra' => $seller_data->id_mitra,
             'created_at' => now(),
             'updated_at' => now(),
         ];

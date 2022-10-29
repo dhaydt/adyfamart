@@ -60,6 +60,7 @@ return array(
     'App\\Http\\Controllers\\Admin\\ResellerController' => $baseDir . '/app/Http/Controllers/Admin/ResellerController.php',
     'App\\Http\\Controllers\\Admin\\ReviewsController' => $baseDir . '/app/Http/Controllers/Admin/ReviewsController.php',
     'App\\Http\\Controllers\\Admin\\SMSModuleController' => $baseDir . '/app/Http/Controllers/Admin/SMSModuleController.php',
+    'App\\Http\\Controllers\\Admin\\SaldoController' => $baseDir . '/app/Http/Controllers/Admin/SaldoController.php',
     'App\\Http\\Controllers\\Admin\\SellerController' => $baseDir . '/app/Http/Controllers/Admin/SellerController.php',
     'App\\Http\\Controllers\\Admin\\SellerProductSaleReportController' => $baseDir . '/app/Http/Controllers/Admin/SellerProductSaleReportController.php',
     'App\\Http\\Controllers\\Admin\\ShippingMethodController' => $baseDir . '/app/Http/Controllers/Admin/ShippingMethodController.php',

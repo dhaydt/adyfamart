@@ -811,6 +811,7 @@ class ComposerStaticInit5c810ba0d19412d72c885b40a9decbf5
         'App\\Http\\Controllers\\Admin\\ResellerController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ResellerController.php',
         'App\\Http\\Controllers\\Admin\\ReviewsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ReviewsController.php',
         'App\\Http\\Controllers\\Admin\\SMSModuleController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/SMSModuleController.php',
+        'App\\Http\\Controllers\\Admin\\SaldoController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/SaldoController.php',
         'App\\Http\\Controllers\\Admin\\SellerController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/SellerController.php',
         'App\\Http\\Controllers\\Admin\\SellerProductSaleReportController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/SellerProductSaleReportController.php',
         'App\\Http\\Controllers\\Admin\\ShippingMethodController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ShippingMethodController.php',

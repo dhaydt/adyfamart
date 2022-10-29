@@ -266,6 +266,7 @@ class CartManager
             $cart_check = Cart::where([
                 'customer_id' => $user->id,
                 'seller_id' => $product->user_id,
+                'id_mitra' => $user->reseller_id,
                 'seller_is' => $product->added_by, ])->first();
         }
 
@@ -288,6 +289,7 @@ class CartManager
         $cart['thumbnail'] = $product->thumbnail;
         $cart['seller_id'] = $product->user_id;
         $cart['seller_is'] = $product->added_by;
+        $cart['id_mitra'] = $user->reseller_id;
         if ($product->added_by == 'seller') {
             $cart['shop_info'] = Shop::where(['seller_id' => $product->user_id])->first()->name;
         } else {
