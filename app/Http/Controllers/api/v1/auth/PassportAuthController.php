@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\api\v1\auth;
 
 use App\CPU\Helpers;
+use function App\CPU\translate;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use function App\CPU\translate;
 
 class PassportAuthController extends Controller
 {
@@ -25,7 +25,7 @@ class PassportAuthController extends Controller
         ], [
             'f_name.required' => 'The first name field is required.',
             'l_name.required' => 'The last name field is required.',
-            'country' => 'Your country address is required.'
+            'country' => 'Your country address is required.',
         ]);
 
         if ($validator->fails()) {
@@ -53,14 +53,80 @@ class PassportAuthController extends Controller
         }
 
         $token = $user->createToken('LaravelAuthApp')->accessToken;
+
         return response()->json(['token' => $token], 200);
     }
 
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email' => 'required',
-            'password' => 'required|min:6'
+            'phone' => 'required',
+            'password' => 'required|min:6',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => Helpers::error_processor($validator)], 403);
+        }
+
+        $user_id = (int) $request['phone'];
+        $medium = 'phone';
+
+        $data = [
+            $medium => $user_id,
+            'password' => $request->password,
+        ];
+
+        $user = User::where([$medium => $user_id])->first();
+
+        if (isset($user)) {
+            if ($user->is_active) {
+                if (auth()->attempt($data)) {
+                    $user->temporary_token = Str::random(40);
+                    $user->save();
+
+                    $phone_verification = Helpers::get_business_settings('phone_verification');
+                    $email_verification = Helpers::get_business_settings('email_verification');
+                    if ($phone_verification && !$user->is_phone_verified) {
+                        return response()->json(['temporary_token' => $user->temporary_token], 200);
+                    }
+                    if ($email_verification && !$user->is_email_verified) {
+                        return response()->json(['temporary_token' => $user->temporary_token], 200);
+                    }
+
+                    $token = auth()->user()->createToken('LaravelAuthApp')->accessToken;
+
+                    return response()->json(['token' => $token], 200);
+                } else {
+                    $errors = [];
+                    array_push($errors, ['code' => 'auth-001', 'message' => translate('Wrong_password')]);
+
+                    return response()->json([
+                'errors' => $errors,
+            ], 401);
+                }
+            } else {
+                $errors = [];
+                array_push($errors, ['code' => 'auth-001', 'message' => translate('Account_has_been_suspended')]);
+
+                return response()->json([
+                'errors' => $errors,
+            ], 401);
+            }
+        } else {
+            $errors = [];
+            array_push($errors, ['code' => 'auth-001', 'message' => translate('User_not_found')]);
+
+            return response()->json([
+                'errors' => $errors,
+            ], 401);
+        }
+    }
+
+    public function loginOld(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'phone' => 'required',
+            'password' => 'required|min:6',
         ]);
 
         if ($validator->fails()) {
@@ -71,21 +137,22 @@ class PassportAuthController extends Controller
         if (filter_var($user_id, FILTER_VALIDATE_EMAIL)) {
             $medium = 'email';
         } else {
-            $count = strlen(preg_replace("/[^\d]/", "", $user_id));
+            $count = strlen(preg_replace("/[^\d]/", '', $user_id));
             if ($count >= 9 && $count <= 15) {
                 $medium = 'phone';
             } else {
                 $errors = [];
                 array_push($errors, ['code' => 'email', 'message' => 'Invalid email address or phone number']);
+
                 return response()->json([
-                    'errors' => $errors
+                    'errors' => $errors,
                 ], 403);
             }
         }
 
         $data = [
             $medium => $user_id,
-            'password' => $request->password
+            'password' => $request->password,
         ];
 
         $user = User::where([$medium => $user_id])->first();
@@ -104,12 +171,14 @@ class PassportAuthController extends Controller
             }
 
             $token = auth()->user()->createToken('LaravelAuthApp')->accessToken;
+
             return response()->json(['token' => $token], 200);
         } else {
             $errors = [];
             array_push($errors, ['code' => 'auth-001', 'message' => translate('Customer_not_found_or_Account_has_been_suspended')]);
+
             return response()->json([
-                'errors' => $errors
+                'errors' => $errors,
             ], 401);
         }
     }
