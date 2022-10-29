@@ -59,7 +59,6 @@
 
     <div class="d-lg-flex half">
         <div class="bg order-1 order-md-2" style="background-image: url({{ asset('public/login/images/bg_1.jpg') }});">
-            {{-- <img src="{{ asset('public/login/images/bg_1.jpg') }}" alt=""> --}}
         </div>
         <div class="contents order-2 order-md-1">
 

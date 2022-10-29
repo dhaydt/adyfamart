@@ -17,7 +17,38 @@ class ForgotPassword extends Controller
     public function reset_password_request(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'identity' => 'required|min:6',
+            'phone' => 'required|min:11',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => Helpers::error_processor($validator)], 403);
+        }
+
+        $user = User::where('phone', (int) $request->phone)->first();
+
+        if ($user) {
+            $mitra_id = $user->reseller_id;
+
+            $mitra = Helpers::mitraByMember($mitra_id);
+
+            $phone = 62 .(int) $mitra->phone;
+            $template = 'Tolong reset password akun saya '.' ID Member = '.$user->id_member;
+            $wa = 'https://wa.me/'.$phone.'?text='.urlencode($template);
+
+            return response()->json(['success' => [
+                ['wa_link' => $wa],
+            ]], 202);
+        }
+
+        return response()->json(['errors' => [
+            ['code' => 'not-found', 'message' => 'user not found!'],
+        ]], 404);
+    }
+
+    public function reset_password_requestOld(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'phone' => 'required|min:11',
         ]);
 
         if ($validator->fails()) {
@@ -36,8 +67,9 @@ class ForgotPassword extends Controller
                     'token' => $token,
                     'created_at' => now(),
                 ]);
-                $reset_url = url('/') . '/customer/auth/reset-password?token=' . $token;
+                $reset_url = url('/').'/customer/auth/reset-password?token='.$token;
                 Mail::to($customer['email'])->send(new \App\Mail\PasswordResetMail($reset_url));
+
                 return response()->json(['message' => 'Email sent successfully.'], 200);
             }
         } elseif ($verification_by == 'phone') {
@@ -50,11 +82,13 @@ class ForgotPassword extends Controller
                     'created_at' => now(),
                 ]);
                 SMS_module::send($customer->phone, $token);
+
                 return response()->json(['message' => 'otp sent successfully.'], 200);
             }
         }
+
         return response()->json(['errors' => [
-            ['code' => 'not-found', 'message' => 'user not found!']
+            ['code' => 'not-found', 'message' => 'user not found!'],
         ]], 404);
     }
 
@@ -62,7 +96,7 @@ class ForgotPassword extends Controller
     {
         $validator = Validator::make($request->all(), [
             'identity' => 'required',
-            'otp' => 'required'
+            'otp' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -79,7 +113,7 @@ class ForgotPassword extends Controller
         }
 
         return response()->json(['errors' => [
-            ['code' => 'not-found', 'message' => 'invalid OTP']
+            ['code' => 'not-found', 'message' => 'invalid OTP'],
         ]], 404);
     }
 
@@ -102,7 +136,7 @@ class ForgotPassword extends Controller
         if (isset($data)) {
             DB::table('users')->where('phone', 'like', "%{$data->identity}%")
                 ->update([
-                    'password' => bcrypt(str_replace(' ', '', $request['password']))
+                    'password' => bcrypt(str_replace(' ', '', $request['password'])),
                 ]);
 
             DB::table('password_resets')
@@ -111,8 +145,9 @@ class ForgotPassword extends Controller
 
             return response()->json(['message' => 'Password changed successfully.'], 200);
         }
+
         return response()->json(['errors' => [
-            ['code' => 'invalid', 'message' => 'Invalid token.']
+            ['code' => 'invalid', 'message' => 'Invalid token.'],
         ]], 400);
     }
 }

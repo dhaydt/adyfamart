@@ -22,6 +22,13 @@ use Illuminate\Support\Facades\Session;
 
 class Helpers
 {
+    public static function mitraByMember($member)
+    {
+        $mitra = Admin::where('code_admin', $member)->first();
+
+        return $mitra;
+    }
+
     public static function resellerCode()
     {
         $code_admin = 'AM'.(10000 + Admin::all()->count() + 1);
