@@ -68,7 +68,7 @@ class PassportAuthController extends Controller
             return response()->json(['errors' => Helpers::error_processor($validator)], 403);
         }
 
-        $user_id = (int) $request['phone'];
+        $user_id = $request['phone'];
         $medium = 'phone';
 
         $data = [

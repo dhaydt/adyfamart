@@ -49,7 +49,7 @@ class CustomerController extends Controller
 
         DB::table('users')->where(['id' => $request['id']])->update([
             'f_name' => $request->name,
-            'phone' => strval((int) $request->phone),
+            'phone' => strval($request->phone),
             'email' => $request->email,
             'id_member' => $request->id_member,
             'street_address' => $request->address,
@@ -70,7 +70,7 @@ class CustomerController extends Controller
 
     public function post_customer_add(Request $request)
     {
-        $numb = strval((int) $request['phone']);
+        $numb = strval($request['phone']);
         $user = User::where('email', $request->email)->orWhere('phone', $request->phone)->first();
         if (isset($user) && $user->is_phone_verified == 0 && $user->is_email_verified == 0) {
             return redirect(route('customer.auth.check', [$user->id]));
@@ -138,7 +138,8 @@ class CustomerController extends Controller
                             $q->orWhere('f_name', 'like', "%{$value}%")
                                 ->orWhere('l_name', 'like', "%{$value}%")
                                 ->orWhere('phone', 'like', "%{$value}%")
-                                ->orWhere('email', 'like', "%{$value}%");
+                                ->orWhere('email', 'like', "%{$value}%")
+                                ->orWhere('id_member', 'like', "%{$value}%");
                         }
                     });
                 $query_param = ['search' => $request['search']];
@@ -154,7 +155,8 @@ class CustomerController extends Controller
                             $q->orWhere('f_name', 'like', "%{$value}%")
                                 ->orWhere('l_name', 'like', "%{$value}%")
                                 ->orWhere('phone', 'like', "%{$value}%")
-                                ->orWhere('email', 'like', "%{$value}%");
+                                ->orWhere('email', 'like', "%{$value}%")
+                                ->orWhere('id_member', 'like', "%{$value}%");
                         }
                     });
                 $query_param = ['search' => $request['search']];

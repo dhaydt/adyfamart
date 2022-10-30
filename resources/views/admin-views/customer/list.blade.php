@@ -226,7 +226,7 @@
                                 {{$customer['email']}}
                             </td>
                             <td class="text-center">
-                                +62 {{$customer['phone']}}
+                                +62 {{(int) $customer['phone']}}
                             </td>
                             <td class="text-center">
                                 <label class="badge badge-soft-info">

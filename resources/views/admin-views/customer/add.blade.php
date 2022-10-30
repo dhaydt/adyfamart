@@ -32,7 +32,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <label for="name">{{\App\CPU\translate('ID_Member')}}</label>
-                                    <input type="text" name="id_member" class="form-control" id="id_member"
+                                    <input type="text" name="id_member" class="form-control" id="id_member" value="{{old('id_member')}}"
                                         placeholder="" required>
                                 </div>
                                 <div class="col-md-6">
