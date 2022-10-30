@@ -49,7 +49,7 @@ class CustomerController extends Controller
 
         DB::table('users')->where(['id' => $request['id']])->update([
             'f_name' => $request->name,
-            'phone' => (int) $request->phone,
+            'phone' => strval((int) $request->phone),
             'email' => $request->email,
             'id_member' => $request->id_member,
             'street_address' => $request->address,
@@ -70,7 +70,7 @@ class CustomerController extends Controller
 
     public function post_customer_add(Request $request)
     {
-        $numb = (int) $request['phone'];
+        $numb = strval((int) $request['phone']);
         $user = User::where('email', $request->email)->orWhere('phone', $request->phone)->first();
         if (isset($user) && $user->is_phone_verified == 0 && $user->is_email_verified == 0) {
             return redirect(route('customer.auth.check', [$user->id]));
