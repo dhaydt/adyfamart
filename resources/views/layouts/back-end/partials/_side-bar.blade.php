@@ -114,18 +114,6 @@
                                         </span>
                                         </a>
                                     </li>
-                                    <li class="nav-item {{Request::is('admin/orders/list/confirmed')?'active':''}}">
-                                        <a class="nav-link " href="{{route('admin.orders.list',['confirmed'])}}"
-                                           title="">
-                                            <span class="tio-circle nav-indicator-icon"></span>
-                                            <span class="text-truncate">
-                                            {{\App\CPU\translate('confirmed')}}
-                                                <span class="badge badge-soft-success badge-pill ml-1">
-                                                {{\App\Model\Order::where(['order_status'=>'confirmed'])->count()}}
-                                            </span>
-                                        </span>
-                                        </a>
-                                    </li>
                                     <li class="nav-item {{Request::is('admin/orders/list/processing')?'active':''}}">
                                         <a class="nav-link " href="{{route('admin.orders.list',['processing'])}}"
                                            title="">
@@ -138,7 +126,19 @@
                                         </span>
                                         </a>
                                     </li>
-                                    <li class="nav-item {{Request::is('admin/orders/list/out_for_delivery')?'active':''}}">
+                                    {{-- <li class="nav-item {{Request::is('admin/orders/list/confirmed')?'active':''}}">
+                                        <a class="nav-link " href="{{route('admin.orders.list',['confirmed'])}}"
+                                           title="">
+                                            <span class="tio-circle nav-indicator-icon"></span>
+                                            <span class="text-truncate">
+                                            {{\App\CPU\translate('confirmed')}}
+                                                <span class="badge badge-soft-success badge-pill ml-1">
+                                                {{\App\Model\Order::where(['order_status'=>'confirmed'])->count()}}
+                                            </span>
+                                        </span>
+                                        </a>
+                                    </li> --}}
+                                    {{-- <li class="nav-item {{Request::is('admin/orders/list/out_for_delivery')?'active':''}}">
                                         <a class="nav-link " href="{{route('admin.orders.list',['out_for_delivery'])}}"
                                            title="">
                                             <span class="tio-circle nav-indicator-icon"></span>
@@ -149,8 +149,8 @@
                                             </span>
                                         </span>
                                         </a>
-                                    </li>
-                                    <li class="nav-item {{Request::is('admin/orders/list/delivered')?'active':''}}">
+                                    </li> --}}
+                                    {{-- <li class="nav-item {{Request::is('admin/orders/list/delivered')?'active':''}}">
                                         <a class="nav-link " href="{{route('admin.orders.list',['delivered'])}}"
                                            title="">
                                             <span class="tio-circle nav-indicator-icon"></span>
@@ -161,8 +161,8 @@
                                             </span>
                                         </span>
                                         </a>
-                                    </li>
-                                    <li class="nav-item {{Request::is('admin/orders/list/returned')?'active':''}}">
+                                    </li> --}}
+                                    {{-- <li class="nav-item {{Request::is('admin/orders/list/returned')?'active':''}}">
                                         <a class="nav-link " href="{{route('admin.orders.list',['returned'])}}"
                                            title="">
                                             <span class="tio-circle nav-indicator-icon"></span>
@@ -173,27 +173,27 @@
                                             </span>
                                         </span>
                                         </a>
-                                    </li>
-                                    <li class="nav-item {{Request::is('admin/orders/list/failed')?'active':''}}">
-                                        <a class="nav-link " href="{{route('admin.orders.list',['failed'])}}" title="">
-                                            <span class="tio-circle nav-indicator-icon"></span>
-                                            <span class="text-truncate">
-                                            {{\App\CPU\translate('failed')}}
-                                            <span class="badge badge-danger badge-pill ml-1">
-                                                {{\App\Model\Order::where(['order_status'=>'failed'])->count()}}
-                                            </span>
-                                        </span>
-                                        </a>
-                                    </li>
-
+                                    </li> --}}
                                     <li class="nav-item {{Request::is('admin/orders/list/canceled')?'active':''}}">
                                         <a class="nav-link " href="{{route('admin.orders.list',['canceled'])}}"
                                            title="">
                                             <span class="tio-circle nav-indicator-icon"></span>
                                             <span class="text-truncate">
-                                            {{\App\CPU\translate('canceled')}}
+                                            {{\App\CPU\translate('cancel')}}
                                                 <span class="badge badge-danger badge-pill ml-1">
                                                 {{\App\Model\Order::where(['order_status'=>'canceled'])->count()}}
+                                            </span>
+                                        </span>
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item {{Request::is('admin/orders/list/failed')?'active':''}}">
+                                        <a class="nav-link " href="{{route('admin.orders.list',['reject'])}}" title="">
+                                            <span class="tio-circle nav-indicator-icon"></span>
+                                            <span class="text-truncate">
+                                            {{\App\CPU\translate('Reject')}}
+                                            <span class="badge badge-danger badge-pill ml-1">
+                                                {{\App\Model\Order::where(['order_status'=>'failed'])->count()}}
                                             </span>
                                         </span>
                                         </a>
@@ -301,7 +301,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="navbar-vertical-aside-has-menu {{Request::is('admin/product/list/seller*')?'active':''}}">
+                            {{-- <li class="navbar-vertical-aside-has-menu {{Request::is('admin/product/list/seller*')?'active':''}}">
                                 <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle"
                                    href="javascript:">
                                     <i class="tio-airdrop nav-icon"></i>
@@ -330,7 +330,7 @@
                                         </a>
                                     </li>
                                 </ul>
-                            </li>
+                            </li> --}}
                         @endif
                     <!--product management ends-->
 
@@ -364,15 +364,15 @@
                                     </span>
                                 </a>
                             </li>
-                            <li class="navbar-vertical-aside-has-menu {{Request::is('admin/deal/flash')?'active':''}}">
+                            {{-- <li class="navbar-vertical-aside-has-menu {{Request::is('admin/deal/flash')?'active':''}}">
                                 <a class="js-navbar-vertical-aside-menu-link nav-link"
                                    href="{{route('admin.deal.flash')}}">
                                     <i class="tio-flash nav-icon"></i>
                                     <span
                                         class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{\App\CPU\translate('flash_deals')}}</span>
                                 </a>
-                            </li>
-                            <li class="navbar-vertical-aside-has-menu {{Request::is('admin/deal/day')?'active':''}}">
+                            </li> --}}
+                            {{-- <li class="navbar-vertical-aside-has-menu {{Request::is('admin/deal/day')?'active':''}}">
                                 <a class="js-navbar-vertical-aside-menu-link nav-link"
                                    href="{{route('admin.deal.day')}}">
                                     <i class="tio-crown-outlined nav-icon"></i>
@@ -380,8 +380,8 @@
                                         {{\App\CPU\translate('deal_of_the_day')}}
                                     </span>
                                 </a>
-                            </li>
-                            <li class="navbar-vertical-aside-has-menu {{Request::is('admin/deal/feature')?'active':''}}">
+                            </li> --}}
+                            {{-- <li class="navbar-vertical-aside-has-menu {{Request::is('admin/deal/feature')?'active':''}}">
                                 <a class="js-navbar-vertical-aside-menu-link nav-link"
                                    href="{{route('admin.deal.feature')}}">
                                     <i class="tio-flag-outlined nav-icon"></i>
@@ -389,7 +389,7 @@
                                         {{\App\CPU\translate('featured_deal')}}
                                     </span>
                                 </a>
-                            </li>
+                            </li> --}}
                         @endif
                     <!--marketing section ends here-->
 
@@ -409,7 +409,7 @@
                                 </span>
                                 </a>
                             </li>
-                            <li class="navbar-vertical-aside-has-menu {{Request::is('admin/reviews*')?'active':''}}">
+                            {{-- <li class="navbar-vertical-aside-has-menu {{Request::is('admin/reviews*')?'active':''}}">
                                 <a class="js-navbar-vertical-aside-menu-link nav-link"
                                    href="{{route('admin.reviews.list')}}">
                                     <i class="tio-star nav-icon"></i>
@@ -417,7 +417,7 @@
                                     {{\App\CPU\translate('Customer')}} {{\App\CPU\translate('Reviews')}}
                                 </span>
                                 </a>
-                            </li>
+                            </li> --}}
                             <li class="navbar-vertical-aside-has-menu {{Request::is('admin/stock/product-in-wishlist')?'active':''}}">
                                 <a class="js-navbar-vertical-aside-menu-link nav-link"
                                    href="{{route('admin.stock.product-in-wishlist')}}">
@@ -512,6 +512,7 @@
                                 </ul>
                             </li>
                             @endif
+                            @if (session()->get('admin_type') !== 'admin')
                             <li class="nav-item {{Request::is('admin/customer/add')?'active':''}}">
                                 <a class="nav-link " href="{{route('admin.customer.add')}}">
                                     <span class="fa-solid fa-user-plus nav-icon fs-15"></span>
@@ -519,6 +520,7 @@
                                         class="text-truncate">{{\App\CPU\translate('add_customer')}} </span>
                                 </a>
                             </li>
+                            @endif
 
                             <li class="nav-item {{Request::is('admin/customer/list')?'active':''}}">
                                 <a class="nav-link " href="{{route('admin.customer.list')}}">
@@ -536,7 +538,7 @@
                                 <small class="tio-more-horizontal nav-subtitle-replacer"></small>
                             </li>
 
-                            <li class="navbar-vertical-aside-has-menu {{Request::is('admin/contact*')?'active':''}}">
+                            {{-- <li class="navbar-vertical-aside-has-menu {{Request::is('admin/contact*')?'active':''}}">
                                 <a class="js-navbar-vertical-aside-menu-link nav-link"
                                    href="{{route('admin.contact.list')}}">
                                     <i class="tio-messages nav-icon"></i>
@@ -544,8 +546,8 @@
                                     {{\App\CPU\translate('messages')}}
                                 </span>
                                 </a>
-                            </li>
-                            <li class="navbar-vertical-aside-has-menu {{Request::is('admin/support-ticket*')?'active':''}}">
+                            </li> --}}
+                            {{-- <li class="navbar-vertical-aside-has-menu {{Request::is('admin/support-ticket*')?'active':''}}">
                                 <a class="js-navbar-vertical-aside-menu-link nav-link"
                                    href="{{route('admin.support-ticket.view')}}">
                                     <i class="tio-chat nav-icon"></i>
@@ -553,7 +555,7 @@
                                     {{\App\CPU\translate('support_ticket')}}
                                 </span>
                                 </a>
-                            </li>
+                            </li> --}}
                         @endif
                     <!--support section ends here-->
 
@@ -580,7 +582,7 @@
                                     </span>
                                 </a>
                             </li> --}}
-                            <li class="navbar-vertical-aside-has-menu {{Request::is('admin/business-settings/payment-method')?'active':''}}">
+                            {{-- <li class="navbar-vertical-aside-has-menu {{Request::is('admin/business-settings/payment-method')?'active':''}}">
                                 <a class="js-navbar-vertical-aside-menu-link nav-link"
                                    href="{{route('admin.business-settings.payment-method.index')}}">
                                     <i class="tio-money-vs nav-icon"></i>
@@ -588,17 +590,17 @@
                                         {{\App\CPU\translate('payment_method')}}
                                     </span>
                                 </a>
-                            </li>
+                            </li> --}}
 
-                            <li class="navbar-vertical-aside-has-menu {{Request::is('admin/business-settings/sms-module')?'active':''}}">
+                            {{-- <li class="navbar-vertical-aside-has-menu {{Request::is('admin/business-settings/sms-module')?'active':''}}">
                                 <a class="nav-link " href="{{route('admin.business-settings.sms-module')}}"
                                    title="{{\App\CPU\translate('sms')}} {{\App\CPU\translate('module')}}">
                                     <i class="tio-sms-active-outlined nav-icon"></i>
                                     <span class="text-truncate">{{\App\CPU\translate('sms')}} {{\App\CPU\translate('module')}}</span>
                                 </a>
-                            </li>
+                            </li> --}}
 
-                            <li class="navbar-vertical-aside-has-menu {{Request::is('admin/business-settings/shipping-method*')?'active':''}}">
+                            {{-- <li class="navbar-vertical-aside-has-menu {{Request::is('admin/business-settings/shipping-method*')?'active':''}}">
                                 <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle"
                                    href="javascript:">
                                     <i class="tio-car nav-icon"></i>
@@ -617,7 +619,7 @@
                                             </span>
                                         </a>
                                     </li>
-                                    {{-- <li class="nav-item {{Request::is('admin/business-settings/shipping-method/by/seller')?'active':''}}">
+                                    <li class="nav-item {{Request::is('admin/business-settings/shipping-method/by/seller')?'active':''}}">
                                         <a class="nav-link"
                                            href="{{route('admin.business-settings.shipping-method.by.seller')}}">
                                             <span class="tio-circle nav-indicator-icon"></span>
@@ -625,7 +627,7 @@
                                                {{\App\CPU\translate('by_seller')}}
                                             </span>
                                         </a>
-                                    </li> --}}
+                                    </li>
                                     <li class="nav-item {{Request::is('admin/business-settings/shipping-method/setting')?'active':''}}">
                                         <a class="nav-link"
                                            href="{{route('admin.business-settings.shipping-method.setting')}}">
@@ -636,16 +638,16 @@
                                         </a>
                                     </li>
                                 </ul>
-                            </li>
+                            </li> --}}
 
-                            <li class="navbar-vertical-aside-has-menu {{Request::is('admin/business-settings/language*')?'active':''}}">
+                            {{-- <li class="navbar-vertical-aside-has-menu {{Request::is('admin/business-settings/language*')?'active':''}}">
                                 <a class="nav-link " href="{{route('admin.business-settings.language.index')}}"
                                    title="{{\App\CPU\translate('languages')}}">
                                     <i class="tio-book-opened nav-icon"></i>
                                     <span class="text-truncate">{{\App\CPU\translate('languages')}}</span>
                                 </a>
-                            </li>
-
+                            </li> --}}
+{{--
                             <li class="navbar-vertical-aside-has-menu {{Request::is('admin/social-login/view')?'active':''}}">
                                 <a class="js-navbar-vertical-aside-menu-link nav-link"
                                    href="{{route('admin.social-login.view')}}">
@@ -654,8 +656,8 @@
                                         {{\App\CPU\translate('social_login')}}
                                     </span>
                                 </a>
-                            </li>
-                            <li class="navbar-vertical-aside-has-menu {{Request::is('admin/currency/view')?'active':''}}">
+                            </li> --}}
+                            {{-- <li class="navbar-vertical-aside-has-menu {{Request::is('admin/currency/view')?'active':''}}">
                                 <a class="js-navbar-vertical-aside-menu-link nav-link"
                                    href="{{route('admin.currency.view')}}">
                                     <i class="tio-dollar-outlined nav-icon"></i>
@@ -663,7 +665,7 @@
                                         {{\App\CPU\translate('currencies')}}
                                     </span>
                                 </a>
-                            </li>
+                            </li> --}}
                         @endif
                     <!--business settings ends here-->
 
@@ -682,7 +684,7 @@
                                     </span>
                                 </a>
                             </li>
-                            <li class="navbar-vertical-aside-has-menu {{Request::is('admin/business-settings/mail')?'active':''}}">
+                            {{-- <li class="navbar-vertical-aside-has-menu {{Request::is('admin/business-settings/mail')?'active':''}}">
                                 <a class="js-navbar-vertical-aside-menu-link nav-link"
                                    href="{{route('admin.business-settings.mail.index')}}">
                                     <i class="tio-email nav-icon"></i>
@@ -690,7 +692,7 @@
                                         {{\App\CPU\translate('mail_config')}}
                                     </span>
                                 </a>
-                            </li>
+                            </li> --}}
                             <li class="navbar-vertical-aside-has-menu {{Request::is('admin/business-settings/fcm-index')?'active':''}}">
                                 <a class="js-navbar-vertical-aside-menu-link nav-link"
                                    href="{{route('admin.business-settings.fcm-index')}}">
@@ -744,7 +746,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="navbar-vertical-aside-has-menu {{Request::is('admin/business-settings/social-media')?'active':''}}">
+                            {{-- <li class="navbar-vertical-aside-has-menu {{Request::is('admin/business-settings/social-media')?'active':''}}">
                                 <a class="js-navbar-vertical-aside-menu-link nav-link"
                                    href="{{route('admin.business-settings.social-media')}}">
                                     <i class="tio-twitter nav-icon"></i>
@@ -752,7 +754,7 @@
                                         {{\App\CPU\translate('social_media')}}
                                     </span>
                                 </a>
-                            </li>
+                            </li> --}}
                         @endif
                     <!--web & app settings ends here-->
 

@@ -120,10 +120,10 @@
                         </th>
                         <th class=" ">{{\App\CPU\translate('Order')}}</th>
                         <th>{{\App\CPU\translate('Date')}}</th>
-                        <th>{{\App\CPU\translate('delivery_date')}}</th>
+                        {{-- <th>{{\App\CPU\translate('delivery_date')}}</th> --}}
                         <th>{{\App\CPU\translate('customer_name')}}</th>
                         <th>{{\App\CPU\translate('Status')}}</th>
-                        <th>{{\App\CPU\translate('payment')}}</th>
+                        {{-- <th>{{\App\CPU\translate('payment')}}</th> --}}
                         <th>{{\App\CPU\translate('Total')}}</th>
                         <th>{{\App\CPU\translate('Order')}} {{\App\CPU\translate('Status')}} </th>
                         <th>{{\App\CPU\translate('Action')}}</th>
@@ -142,11 +142,11 @@
                                 <a href="{{route('admin.orders.details',['id'=>$order['id']])}}">{{$order['id']}}</a>
                             </td>
                             <td>{{date('d M Y',strtotime($order['created_at']))}}</td>
-                            <td>
+                            {{-- <td>
                                 @if ($order['delivery_date'])
                                 {{date('d M Y',strtotime($order['delivery_date']))}}
                                 @endif
-                            </td>
+                            </td> --}}
                             <td>
                                 @if($order->customer)
                                     <a class="text-body text-capitalize"
@@ -168,9 +168,9 @@
                                     </span>
                                 @endif
                             </td>
-                            <td>
+                            {{-- <td>
                                 {{str_replace('_',' ',$order['payment_method'])}}
-                            </td>
+                            </td> --}}
                             <td> {{\App\CPU\BackEndHelper::set_symbol(\App\CPU\BackEndHelper::usd_to_currency($order->order_amount))}}</td>
                             <td class="text-capitalize">
                                 @if($order['order_status']=='pending')

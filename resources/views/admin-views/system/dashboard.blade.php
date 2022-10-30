@@ -40,7 +40,7 @@
 @endpush
 
 @section('content')
-    @if(auth('admin')->user()->admin_role_id==1 || \App\CPU\Helpers::module_permission_check('dashboard'))
+    @if(auth('admin')->user()->admin_role_id==1 || \App\CPU\Helpers::module_permission_check('dashboard') || session()->get('admin_type') == 'reseller')
         <div class="content container-fluid">
             <!-- Page Header -->
             <div class="page-header" style="padding-bottom: 0!important;border-bottom: 0!important;margin-bottom: 1.25rem!important;">
@@ -90,7 +90,7 @@
             </div>
 
             <!-- End Stats -->
-            <div class="card mb-3">
+            {{-- <div class="card mb-3">
                 <div class="card-body">
                     <div class="flex-between gx-2 gx-lg-3 mb-2">
                         <div>
@@ -102,14 +102,12 @@
                         @include('admin-views.partials._dashboard-wallet-stats',['data'=>$data])
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <!-- End Stats -->
 
-            <div class="row gx-2 gx-lg-3">
+            {{-- <div class="row gx-2 gx-lg-3">
                 <div class="col-lg-12 mb-3 mb-lg-12">
-                    <!-- Card -->
                     <div class="card h-100">
-                        <!-- Body -->
                         <div class="card-body">
                             <div class="row mb-4">
                                 <div class="col-12 mb-3 border-bottom">
@@ -117,11 +115,9 @@
                                         <i style="font-size: 30px" class="tio-chart-pie-1"></i>
                                         {{\App\CPU\translate('earning_statistics_for_business_analytics')}}
                                     </h5>
-                                    <!-- Legend Indicators -->
                                     <h5 class="card-header-title float-right mb-2">{{\App\CPU\translate('this_year_earning')}}
                                         <i style="font-size: 30px" class="tio-chart-bar-2"></i>
                                     </h5>
-                                    <!-- End Legend Indicators -->
                                 </div>
                                 <div class="col-md-4 col-12 graph-border-1">
                                     <div class="mt-2 center-div">
@@ -151,9 +147,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- End Row -->
 
-                            <!-- Bar Chart -->
                             <div class="chartjs-custom">
                                 <canvas id="updatingData" style="height: 20rem;"
                                         data-hs-chartjs-options='{
@@ -230,7 +224,8 @@
                     </div>
                     <!-- End Card -->
                 </div>
-            </div>
+            </div> --}}
+            @if (session()->get('admin_type') != 'reseller')
 
             <div class="row gx-2 gx-lg-3 mt-2">
                 <div class="col-lg-6 mb-3">
@@ -258,21 +253,17 @@
                     <!-- End Card -->
                 </div>
 
-                <div class="col-lg-6 mb-3">
-                    <!-- Card -->
+                {{-- <div class="col-lg-6 mb-3">
                     <div class="card h-100">
                         @include('admin-views.partials._top-store-by-order',['top_store_by_order_received'=>$data['top_store_by_order_received']])
                     </div>
-                    <!-- End Card -->
-                </div>
+                </div> --}}
 
-                <div class="col-lg-6 mb-3">
-                    <!-- Card -->
+                {{-- <div class="col-lg-6 mb-3">
                     <div class="card h-100">
                         @include('admin-views.partials._top-selling-store',['top_store_by_earning'=>$data['top_store_by_earning']])
                     </div>
-                    <!-- End Card -->
-                </div>
+                </div> --}}
 
                 <div class="col-lg-6 mb-3">
                     <!-- Card -->
@@ -282,23 +273,20 @@
                     <!-- End Card -->
                 </div>
 
-                <div class="col-lg-6 mb-3">
-                    <!-- Card -->
+                {{-- <div class="col-lg-6 mb-3">
                     <div class="card h-100">
                         @include('admin-views.partials._most-rated-products',['most_rated_products'=>$data['most_rated_products']])
                     </div>
-                    <!-- End Card -->
-                </div>
+                </div> --}}
 
-                <div class="col-lg-6 mb-3">
-                    <!-- Card -->
+                {{-- <div class="col-lg-6 mb-3">
                     <div class="card h-100">
                         @include('admin-views.partials._top-customer',['top_customer'=>$data['top_customer']])
                     </div>
-                    <!-- End Card -->
-                </div>
+                </div> --}}
 
             </div>
+            @endif
         </div>
     @else
         <div class="content container-fluid">
