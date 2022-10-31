@@ -34,7 +34,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label for="name">{{\App\CPU\translate('Phone')}}</label>
-                                    <input type="text" name="phone" value="{{old('phone')}}" class="form-control" id="phone"
+                                    <input type="number" name="phone" value="{{old('phone')}}" class="form-control" id="phone"
                                         placeholder="{{\App\CPU\translate('Ex')}} : +628882********">
                                 </div>
                             </div>
@@ -56,6 +56,10 @@
 
                         <div class="form-group">
                             <div class="row">
+                                <div class="col-md-6">
+                                    <label for="name">{{\App\CPU\translate('Password')}}</label>
+                                    <input type="password" class="form-control" name="password" required>
+                                </div>
                                 <div class="col-md-6">
                                     <label for="name">{{\App\CPU\translate('reseller_image')}}</label><span class="badge badge-soft-danger">( {{\App\CPU\translate('ratio')}} 1:1 )</span>
                                     <br>

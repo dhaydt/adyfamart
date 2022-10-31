@@ -26,6 +26,7 @@ class ResellerController extends Controller
             'name' => 'required',
             'image' => 'required',
             'address' => 'required',
+            'password' => 'required|min:8',
             'email' => 'required|email|unique:users',
         ], [
             'name.required' => 'name is required!',
@@ -42,9 +43,14 @@ class ResellerController extends Controller
 
         $role_id = AdminRole::where('name', 'reseller')->first('id');
         if (!$role_id) {
-            Toastr::warning('Role reseller not created yet, please create role reseller to add Mitra!');
+            $newRole = new AdminRole();
+            $newRole->name = 'reseller';
+            $newRole->module_access = json_encode(['order_management', 'user_section']);
+            $newRole->save();
 
-            return redirect()->back();
+            $roles = $newRole->id;
+        } else {
+            $roles = $role_id['id'];
         }
 
         DB::table('admins')->insert([
@@ -54,8 +60,8 @@ class ResellerController extends Controller
             'address' => $request->address,
             'code_admin' => Helpers::resellerCode(),
             'admin_type' => 'reseller',
-            'admin_role_id' => $role_id['id'],
-            'password' => bcrypt(env('RESELLER_PASS', 'resellerreseller')),
+            'admin_role_id' => $roles,
+            'password' => bcrypt($request->password),
             'image' => ImageManager::upload('admin/', 'png', $request->file('image')),
             'created_at' => now(),
             'updated_at' => now(),
