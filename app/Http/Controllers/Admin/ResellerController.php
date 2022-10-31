@@ -91,16 +91,9 @@ class ResellerController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'role_id' => 'required',
         ], [
-            'name.required' => 'Role name is required!',
+            'name.required' => 'Mitra name is required!',
         ]);
-
-        if ($request->role_id == 1) {
-            Toastr::warning('Access Denied!');
-
-            return back();
-        }
 
         $e = Admin::find($id);
         if ($request['password'] == null) {
@@ -122,7 +115,6 @@ class ResellerController extends Controller
             'name' => $request->name,
             'phone' => $request->phone,
             'email' => $request->email,
-            'admin_role_id' => $request->role_id,
             'password' => $pass,
             'image' => $e['image'],
             'updated_at' => now(),
