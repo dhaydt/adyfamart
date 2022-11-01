@@ -24,7 +24,7 @@ class ForgotPassword extends Controller
             return response()->json(['errors' => Helpers::error_processor($validator)], 403);
         }
 
-        $user = User::where('phone', (int) $request->phone)->first();
+        $user = User::where('phone', $request->phone)->first();
 
         if ($user) {
             $mitra_id = $user->reseller_id;

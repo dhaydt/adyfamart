@@ -7,6 +7,7 @@ use App\CPU\ImageManager;
 use App\Http\Controllers\Controller;
 use App\Model\Admin;
 use App\Model\AdminRole;
+use App\Model\AdminWallet;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -53,12 +54,14 @@ class ResellerController extends Controller
             $roles = $role_id['id'];
         }
 
+        $code = Helpers::resellerCode();
+
         DB::table('admins')->insert([
             'name' => $request->name,
             'phone' => $request->phone,
             'email' => $request->email,
             'address' => $request->address,
-            'code_admin' => Helpers::resellerCode(),
+            'code_admin' => $code,
             'admin_type' => 'reseller',
             'admin_role_id' => $roles,
             'password' => bcrypt($request->password),
@@ -66,6 +69,13 @@ class ResellerController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
+        $admin = Admin::where('code_admin', $code)->first();
+
+        $saldo = new AdminWallet();
+        $saldo->admin_id = $admin['id'];
+        $saldo->saldo = 0;
+        $saldo->save();
 
         Toastr::success('Reseller added successfully!');
 
