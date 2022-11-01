@@ -147,7 +147,13 @@
                                 <a href="{{route('admin.orders.details',['id'=>$order['id']])}}">{{$order['id']}}</a>
                             </td>
                             <td>{{date('d M Y',strtotime($order['created_at']))}}</td>
-                            <td>{{ $order['customer'] ? $order['customer']['id_member'] : \App\CPU\translate('Invali_ID_Member') }}</td>
+                            <td>
+                                @if($order->customer)
+                                    {{ $order['customer']['id_member'] }}
+                                @else
+                                    <label class="badge badge-danger">{{\App\CPU\translate('invalid_customer_data')}}</label>
+                                @endif
+                            </td>
                             <td>
                                 @if($order->customer)
                                     <a class="text-body text-capitalize"
