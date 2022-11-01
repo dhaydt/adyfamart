@@ -41,6 +41,12 @@ class OrderController extends Controller
                 'request' => $request,
             ];
             $order_id = OrderManager::generate_order($data);
+            if ($order_id == 'limited') {
+                return [
+                    'status' => 2,
+                    'message' => translate('You_have_reached_the_purchase_limit!'),
+                ];
+            }
             array_push($order_ids, $order_id);
         }
 

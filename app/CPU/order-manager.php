@@ -259,6 +259,8 @@ class OrderManager
         $cart_group_id = $data['cart_group_id'];
         $seller_data = Cart::where(['cart_group_id' => $cart_group_id])->first();
 
+        $amount = CartManager::cart_grand_total($cart_group_id);
+
         $or = [
             'id' => $order_id,
             'delivery_date' => $delivery_date,
@@ -275,7 +277,7 @@ class OrderManager
             'discount_amount' => $discount,
             'discount_type' => $discount == 0 ? null : 'coupon_discount',
             'coupon_code' => $coupon_code,
-            'order_amount' => CartManager::cart_grand_total($cart_group_id) - $discount,
+            'order_amount' => $amount - $discount,
             'shipping_address' => $address_id,
             'shipping_address_data' => ShippingAddress::find($address_id),
             'shipping_cost' => 0,
@@ -284,6 +286,12 @@ class OrderManager
             'created_at' => now(),
             'updated_at' => now(),
         ];
+
+        $limit = Helpers::getMitra($user->reseller_id)['wallet']['saldo'];
+
+        if ($limit < $amount) {
+            return 'limited';
+        }
 
         $order_id = DB::table('orders')->insertGetId($or);
 

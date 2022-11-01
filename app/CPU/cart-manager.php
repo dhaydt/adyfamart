@@ -256,18 +256,6 @@ class CartManager
             $price = $product->unit_price;
         }
 
-        $limit = Helpers::getMitra($user->reseller_id)['wallet']['saldo'];
-        // $total_bel = Helpers::totalBelanja($user);
-
-        // dd($total_bel);
-
-        if ($limit < ($price * $request['quantity'])) {
-            return [
-                'status' => 2,
-                'message' => translate('You_have_reached_the_purchase_limit!'),
-            ];
-        }
-
         $tax = Helpers::tax_calculation($price, $product['tax'], 'percent');
 
         //generate group id
