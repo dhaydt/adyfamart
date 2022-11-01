@@ -22,6 +22,13 @@ use Illuminate\Support\Facades\Session;
 
 class Helpers
 {
+    public static function getMitraLimit($reseller_id)
+    {
+        $mitra = Admin::with('wallet')->where(['admin_type' => 'reseller', 'code_admin' => $reseller_id])->first();
+
+        return $mitra;
+    }
+
     public static function mitraByMember($member)
     {
         $mitra = Admin::where('code_admin', $member)->first();

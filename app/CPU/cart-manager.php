@@ -256,6 +256,15 @@ class CartManager
             $price = $product->unit_price;
         }
 
+        $limit = Helpers::getMitraLimit($user->reseller_id)['wallet']['saldo'];
+
+        if ($limit < ($price * $request['quantity'])) {
+            return [
+                'status' => 2,
+                'message' => translate('You_have_reached_the_purchase_limit!'),
+            ];
+        }
+
         $tax = Helpers::tax_calculation($price, $product['tax'], 'percent');
 
         //generate group id
