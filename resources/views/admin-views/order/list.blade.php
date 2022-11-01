@@ -119,14 +119,15 @@
                             {{\App\CPU\translate('SL')}}#
                         </th>
                         <th class=" ">{{\App\CPU\translate('Order')}}</th>
+                        <th>{{\App\CPU\translate('Date')}}</th>
                         @if (session()->get('admin_type') !== 'reseller')
-                            <th>{{\App\CPU\translate('Date')}}</th>
+                            <th>{{\App\CPU\translate('ID_Member')}}</th>
+                            <th>{{\App\CPU\translate('Mitra')}}</th>
                         @endif
-                        {{-- <th>{{\App\CPU\translate('delivery_date')}}</th> --}}
                         <th>{{\App\CPU\translate('customer_name')}}</th>
-                        @if (session()->get('admin_type') !== 'reseller')
+                        {{-- @if (session()->get('admin_type') !== 'reseller')
                         <th>{{\App\CPU\translate('Status')}}</th>
-                        @endif
+                        @endif --}}
                         {{-- <th>{{\App\CPU\translate('payment')}}</th> --}}
                         <th>{{\App\CPU\translate('Total')}}</th>
                         <th>{{\App\CPU\translate('Order')}} {{\App\CPU\translate('Status')}} </th>
@@ -145,23 +146,22 @@
                             <td class="table-column-pl-0">
                                 <a href="{{route('admin.orders.details',['id'=>$order['id']])}}">{{$order['id']}}</a>
                             </td>
-                            @if (session()->get('admin_type') !== 'reseller')
                             <td>{{date('d M Y',strtotime($order['created_at']))}}</td>
+                            @if (session()->get('admin_type') !== 'reseller')
+                            <td>{{ $order['customer']['id_member'] }}</td>
+                            <td>
+                                {{ $order['mitra']['name']}}, ({{ $order['mitra']['code_admin'] }})
+                            </td>
                             @endif
-                            {{-- <td>
-                                @if ($order['delivery_date'])
-                                {{date('d M Y',strtotime($order['delivery_date']))}}
-                                @endif
-                            </td> --}}
                             <td>
                                 @if($order->customer)
                                     <a class="text-body text-capitalize"
-                                       href="{{route('admin.orders.details',['id'=>$order['id']])}}">{{$order->customer['f_name'].' '.$order->customer['l_name']}}</a>
+                                    href="{{route('admin.orders.details',['id'=>$order['id']])}}">{{$order->customer['f_name'].' '.$order->customer['l_name']}}</a>
                                 @else
                                     <label class="badge badge-danger">{{\App\CPU\translate('invalid_customer_data')}}</label>
                                 @endif
                             </td>
-                            @if (session()->get('admin_type') !== 'reseller')
+                            {{-- @if (session()->get('admin_type') !== 'reseller')
                             <td>
                                 @if($order->payment_status=='paid')
                                     <span class="badge badge-soft-success">
@@ -175,7 +175,7 @@
                                     </span>
                                 @endif
                             </td>
-                            @endif
+                            @endif --}}
                             {{-- <td>
                                 {{str_replace('_',' ',$order['payment_method'])}}
                             </td> --}}

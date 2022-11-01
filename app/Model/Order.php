@@ -41,8 +41,14 @@ class Order extends Model
     {
         return $this->belongsTo(ShippingMethod::class, 'shipping_method_id');
     }
+
     public function shippingAddress()
     {
         return $this->belongsTo(ShippingAddress::class, 'shipping_address');
+    }
+
+    public function mitra()
+    {
+        return $this->belongsTo(Admin::class, 'id_mitra', 'code_admin');
     }
 }

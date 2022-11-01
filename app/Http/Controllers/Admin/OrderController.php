@@ -26,7 +26,7 @@ class OrderController extends Controller
         if ($admin_type == 'reseller') {
             $id_mitra = session()->get('id_reseller');
             if (session()->has('show_inhouse_orders') && session('show_inhouse_orders') == 1) {
-                $query = Order::where('id_mitra', $id_mitra)->whereHas('details', function ($query) {
+                $query = Order::with('mitra')->where('id_mitra', $id_mitra)->whereHas('details', function ($query) {
                     $query->whereHas('product', function ($query) {
                         $query->where('added_by', 'admin');
                     });
@@ -60,9 +60,9 @@ class OrderController extends Controller
                 }
             } else {
                 if ($status != 'all') {
-                    $orders = Order::with(['customer'])->where(['order_status' => $status, 'id_mitra' => $id_mitra]);
+                    $orders = Order::with(['customer', 'mitra'])->where(['order_status' => $status, 'id_mitra' => $id_mitra]);
                 } else {
-                    $orders = Order::with(['customer'])->where('id_mitra', $id_mitra);
+                    $orders = Order::with(['customer', 'mitra'])->where('id_mitra', $id_mitra);
                 }
 
                 if ($request->has('search')) {
@@ -89,7 +89,7 @@ class OrderController extends Controller
             }
         } elseif ($admin_type == 'admin') {
             if (session()->has('show_inhouse_orders') && session('show_inhouse_orders') == 1) {
-                $query = Order::whereHas('details', function ($query) {
+                $query = Order::with('mitra')->whereHas('details', function ($query) {
                     $query->whereHas('product', function ($query) {
                         $query->where('added_by', 'admin');
                     });
@@ -123,9 +123,9 @@ class OrderController extends Controller
                 }
             } else {
                 if ($status != 'all') {
-                    $orders = Order::with(['customer'])->where(['order_status' => $status]);
+                    $orders = Order::with(['customer', 'mitra'])->where(['order_status' => $status]);
                 } else {
-                    $orders = Order::with(['customer']);
+                    $orders = Order::with(['customer', 'mitra']);
                 }
 
                 if ($request->has('search')) {
