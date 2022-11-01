@@ -97,9 +97,15 @@
                                             <span class="tio-circle nav-indicator-icon"></span>
                                             <span class="text-truncate">
                                             {{\App\CPU\translate('All')}}
-                                            <span class="badge badge-info badge-pill ml-1">
-                                                {{\App\Model\Order::count()}}
-                                            </span>
+                                            @if (session()->get('admin_type') == 'reseller')
+                                                <span class="badge badge-info badge-pill ml-1">
+                                                    {{\App\Model\Order::where('id_mitra', session()->get('id_reseller'))->count()}}
+                                                </span>
+                                            @else
+                                                <span class="badge badge-info badge-pill ml-1">
+                                                    {{\App\Model\Order::count()}}
+                                                </span>
+                                            @endif
                                         </span>
                                         </a>
                                     </li>
@@ -108,9 +114,15 @@
                                             <span class="tio-circle nav-indicator-icon"></span>
                                             <span class="text-truncate">
                                             {{\App\CPU\translate('pending')}}
+                                            @if (session()->get('admin_type') == 'reseller')
+                                            <span class="badge badge-soft-info badge-pill ml-1">
+                                                {{\App\Model\Order::where(['order_status'=>'pending', 'id_mitra' => session()->get('id_reseller')])->count()}}
+                                            </span>
+                                            @else
                                             <span class="badge badge-soft-info badge-pill ml-1">
                                                 {{\App\Model\Order::where(['order_status'=>'pending'])->count()}}
                                             </span>
+                                            @endif
                                         </span>
                                         </a>
                                     </li>
@@ -120,9 +132,15 @@
                                             <span class="tio-circle nav-indicator-icon"></span>
                                             <span class="text-truncate">
                                             {{\App\CPU\translate('Processing')}}
-                                                <span class="badge badge-warning badge-pill ml-1">
+                                            @if (session()->get('admin_type') == 'reseller')
+                                            <span class="badge badge-warning badge-pill ml-1">
+                                                {{\App\Model\Order::where(['order_status'=>'processing', 'id_mitra' => session()->get('id_reseller')])->count()}}
+                                            </span>
+                                            @else
+                                            <span class="badge badge-warning badge-pill ml-1">
                                                 {{\App\Model\Order::where(['order_status'=>'processing'])->count()}}
                                             </span>
+                                            @endif
                                         </span>
                                         </a>
                                     </li>
@@ -180,21 +198,33 @@
                                             <span class="tio-circle nav-indicator-icon"></span>
                                             <span class="text-truncate">
                                             {{\App\CPU\translate('cancel')}}
-                                                <span class="badge badge-danger badge-pill ml-1">
+                                            @if (session()->get('admin_type') == 'reseller')
+                                            <span class="badge badge-danger badge-pill ml-1">
+                                                {{\App\Model\Order::where(['order_status'=>'canceled', 'id_mitra' => session()->get('id_reseller')])->count()}}
+                                            </span>
+                                            @else
+                                            <span class="badge badge-danger badge-pill ml-1">
                                                 {{\App\Model\Order::where(['order_status'=>'canceled'])->count()}}
                                             </span>
+                                            @endif
                                         </span>
                                         </a>
                                     </li>
 
                                     <li class="nav-item {{Request::is('admin/orders/list/failed')?'active':''}}">
-                                        <a class="nav-link " href="{{route('admin.orders.list',['reject'])}}" title="">
+                                        <a class="nav-link " href="{{route('admin.orders.list',['returned'])}}" title="">
                                             <span class="tio-circle nav-indicator-icon"></span>
                                             <span class="text-truncate">
                                             {{\App\CPU\translate('Reject')}}
+                                            @if (session()->get('admin_type') == 'reseller')
                                             <span class="badge badge-danger badge-pill ml-1">
-                                                {{\App\Model\Order::where(['order_status'=>'failed'])->count()}}
+                                                {{\App\Model\Order::where(['order_status'=>'returned', 'id_mitra' => session()->get('id_reseller')])->count()}}
                                             </span>
+                                            @else
+                                            <span class="badge badge-danger badge-pill ml-1">
+                                                {{\App\Model\Order::where(['order_status'=>'returned'])->count()}}
+                                            </span>
+                                            @endif
                                         </span>
                                         </a>
                                     </li>

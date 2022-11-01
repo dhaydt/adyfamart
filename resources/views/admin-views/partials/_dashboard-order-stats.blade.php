@@ -66,13 +66,13 @@
 
 <div class="col-sm-6 col-lg-3 mb-3 mb-lg-5">
     <!-- Card -->
-    <a class="card card-hover-shadow h-100" href="{{route('admin.orders.list',['reject'])}}" style="background: #343A40">
+    <a class="card card-hover-shadow h-100" href="{{route('admin.orders.list',['returned'])}}" style="background: #343A40">
         <div class="card-body">
             <div class="flex-between align-items-center gx-2 mb-1">
                 <div style="text-align: {{Session::get('direction') === "rtl" ? 'right' : 'left'}};">
                     <h6 class="card-subtitle" style="color: white!important;">{{\App\CPU\translate('Reject')}}</h6>
                     <span class="card-title h2" style="color: white!important;">
-                        {{$data['out_for_delivery']}}
+                        {{$data['returned']}}
                     </span>
                 </div>
 

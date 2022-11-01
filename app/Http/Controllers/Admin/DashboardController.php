@@ -214,22 +214,46 @@ class DashboardController extends Controller
                 return $query->whereMonth('created_at', Carbon::now());
             })
             ->count();
-        $canceled = Order::where(['order_status' => 'canceled'])
-            ->when($today, function ($query) {
-                return $query->whereDate('created_at', Carbon::today());
-            })
-            ->when($this_month, function ($query) {
-                return $query->whereMonth('created_at', Carbon::now());
-            })
-            ->count();
-        $returned = Order::where(['order_status' => 'returned'])
-            ->when($today, function ($query) {
-                return $query->whereDate('created_at', Carbon::today());
-            })
-            ->when($this_month, function ($query) {
-                return $query->whereMonth('created_at', Carbon::now());
-            })
-            ->count();
+
+        if (session()->get('admin_type') == 'reseller') {
+            $canceled = Order::where(['order_status' => 'canceled', 'id_mitra' => session()->get('id_reseller')])
+                    ->when($today, function ($query) {
+                        return $query->whereDate('created_at', Carbon::today());
+                    })
+                    ->when($this_month, function ($query) {
+                        return $query->whereMonth('created_at', Carbon::now());
+                    })
+                    ->count();
+        } else {
+            $canceled = Order::where(['order_status' => 'canceled'])
+                    ->when($today, function ($query) {
+                        return $query->whereDate('created_at', Carbon::today());
+                    })
+                    ->when($this_month, function ($query) {
+                        return $query->whereMonth('created_at', Carbon::now());
+                    })
+                    ->count();
+        }
+
+        if (session()->get('admin_type') == 'reseller') {
+            $returned = Order::where(['order_status' => 'returned', 'id_mitra' => session()->get('id_reseller')])
+                ->when($today, function ($query) {
+                    return $query->whereDate('created_at', Carbon::today());
+                })
+                ->when($this_month, function ($query) {
+                    return $query->whereMonth('created_at', Carbon::now());
+                })
+                ->count();
+        } else {
+            $returned = Order::where(['order_status' => 'returned'])
+                ->when($today, function ($query) {
+                    return $query->whereDate('created_at', Carbon::today());
+                })
+                ->when($this_month, function ($query) {
+                    return $query->whereMonth('created_at', Carbon::now());
+                })
+                ->count();
+        }
         $failed = Order::where(['order_status' => 'failed'])
             ->when($today, function ($query) {
                 return $query->whereDate('created_at', Carbon::today());
