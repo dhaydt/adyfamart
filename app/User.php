@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Model\Admin;
 use App\Model\Order;
 use App\Model\ShippingAddress;
 use App\Model\Wishlist;
@@ -59,5 +60,10 @@ class User extends Authenticatable
     public function shipping()
     {
         return $this->belongsTo(ShippingAddress::class, 'shipping_address');
+    }
+
+    public function mitra()
+    {
+        return $this->belongsTo(Admin::class, 'reseller_id', 'code_admin');
     }
 }

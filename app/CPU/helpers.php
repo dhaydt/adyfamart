@@ -22,7 +22,22 @@ use Illuminate\Support\Facades\Session;
 
 class Helpers
 {
-    public static function getMitraLimit($reseller_id)
+    public static function totalBelanja($user)
+    {
+        $order = Order::where('customer_id', $user->id)->pluck('order_amount');
+        $total = 0;
+        if ($order) {
+            $total = [];
+            foreach ($order as $o) {
+                array_push($total, $o);
+            }
+            $total = array_sum($order);
+        }
+
+        return $total;
+    }
+
+    public static function getMitra($reseller_id)
     {
         $mitra = Admin::with('wallet')->where(['admin_type' => 'reseller', 'code_admin' => $reseller_id])->first();
 

@@ -200,7 +200,7 @@
                         </th>
                         <th class="table-column-pl-0 text-center">{{\App\CPU\translate('Name')}}</th>
                         <th class="table-column-pl-0 text-center">{{\App\CPU\translate('ID_Member')}}</th>
-                        <th class="text-center">{{\App\CPU\translate('Email')}}</th>
+                        <th class="text-center">{{\App\CPU\translate('Mitra')}}</th>
                         <th class="text-center">{{\App\CPU\translate('Phone')}}</th>
                         <th class="text-center">{{\App\CPU\translate('Total')}} {{\App\CPU\translate('Order')}} </th>
                         <th class="text-center">{{\App\CPU\translate('Active')}} / {{\App\CPU\translate('InActive')}}</th>
@@ -223,7 +223,7 @@
                                 {{$customer['id_member']}}
                             </td>
                             <td class="text-center">
-                                {{$customer['email']}}
+                                {{$customer['mitra']['name']}} ({{ $customer['mitra']['code_admin'] }})
                             </td>
                             <td class="text-center">
                                 +62 {{(int) $customer['phone']}}

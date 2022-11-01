@@ -256,7 +256,10 @@ class CartManager
             $price = $product->unit_price;
         }
 
-        $limit = Helpers::getMitraLimit($user->reseller_id)['wallet']['saldo'];
+        $limit = Helpers::getMitra($user->reseller_id)['wallet']['saldo'];
+        // $total_bel = Helpers::totalBelanja($user);
+
+        // dd($total_bel);
 
         if ($limit < ($price * $request['quantity'])) {
             return [

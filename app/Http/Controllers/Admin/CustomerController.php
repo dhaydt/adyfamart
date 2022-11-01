@@ -132,7 +132,7 @@ class CustomerController extends Controller
         if (session()->get('admin_type') == 'reseller') {
             if ($request->has('search')) {
                 $key = explode(' ', $request['search']);
-                $customers = User::with(['orders'])->where(['added_by' => 'reseller', 'reseller_id' => session()->get('id_reseller')])
+                $customers = User::with(['orders', 'mitra'])->where(['added_by' => 'reseller', 'reseller_id' => session()->get('id_reseller')])
                     ->where(function ($q) use ($key) {
                         foreach ($key as $value) {
                             $q->orWhere('f_name', 'like', "%{$value}%")
@@ -144,12 +144,12 @@ class CustomerController extends Controller
                     });
                 $query_param = ['search' => $request['search']];
             } else {
-                $customers = User::with(['orders'])->where(['added_by' => 'reseller', 'reseller_id' => session()->get('id_reseller')]);
+                $customers = User::with(['orders', 'mitra'])->where(['added_by' => 'reseller', 'reseller_id' => session()->get('id_reseller')]);
             }
         } else {
             if ($request->has('search')) {
                 $key = explode(' ', $request['search']);
-                $customers = User::with(['orders'])
+                $customers = User::with(['orders', 'mitra'])
                     ->where(function ($q) use ($key) {
                         foreach ($key as $value) {
                             $q->orWhere('f_name', 'like', "%{$value}%")
@@ -161,7 +161,7 @@ class CustomerController extends Controller
                     });
                 $query_param = ['search' => $request['search']];
             } else {
-                $customers = User::with(['orders']);
+                $customers = User::with(['orders', 'mitra']);
             }
         }
         $customers = $customers->latest()->paginate(Helpers::pagination_limit())->appends($query_param);
