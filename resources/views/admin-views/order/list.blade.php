@@ -148,7 +148,7 @@
                             </td>
                             <td>{{date('d M Y',strtotime($order['created_at']))}}</td>
                             @if (session()->get('admin_type') !== 'reseller')
-                            <td>{{ $order['customer']['id_member'] }}</td>
+                            <td>{{ $order['customer'] ? $order['customer']['id_member'] : '<span class="badge badge-danger">'\App\CPU\translate('Invali_ID_Member')'</span>' }}</td>
                             <td>
                                 {{ $order['mitra']['name']}}, ({{ $order['mitra']['code_admin'] }})
                             </td>
