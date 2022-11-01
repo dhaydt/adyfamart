@@ -120,11 +120,11 @@
                         </th>
                         <th class=" ">{{\App\CPU\translate('Order')}}</th>
                         <th>{{\App\CPU\translate('Date')}}</th>
+                        <th>{{\App\CPU\translate('ID_Member')}}</th>
+                        <th>{{\App\CPU\translate('customer_name')}}</th>
                         @if (session()->get('admin_type') !== 'reseller')
-                            <th>{{\App\CPU\translate('ID_Member')}}</th>
                             <th>{{\App\CPU\translate('Mitra')}}</th>
                         @endif
-                        <th>{{\App\CPU\translate('customer_name')}}</th>
                         {{-- @if (session()->get('admin_type') !== 'reseller')
                         <th>{{\App\CPU\translate('Status')}}</th>
                         @endif --}}
@@ -147,12 +147,7 @@
                                 <a href="{{route('admin.orders.details',['id'=>$order['id']])}}">{{$order['id']}}</a>
                             </td>
                             <td>{{date('d M Y',strtotime($order['created_at']))}}</td>
-                            @if (session()->get('admin_type') !== 'reseller')
-                            <td>{{ $order['customer'] ? $order['customer']['id_member'] : '<span class="badge badge-danger">'\App\CPU\translate('Invali_ID_Member')'</span>' }}</td>
-                            <td>
-                                {{ $order['mitra']['name']}}, ({{ $order['mitra']['code_admin'] }})
-                            </td>
-                            @endif
+                            <td>{{ $order['customer'] ? $order['customer']['id_member'] : \App\CPU\translate('Invali_ID_Member') }}</td>
                             <td>
                                 @if($order->customer)
                                     <a class="text-body text-capitalize"
@@ -161,6 +156,11 @@
                                     <label class="badge badge-danger">{{\App\CPU\translate('invalid_customer_data')}}</label>
                                 @endif
                             </td>
+                            @if (session()->get('admin_type') !== 'reseller')
+                            <td>
+                                {{ $order['mitra']['name']}}
+                            </td>
+                            @endif
                             {{-- @if (session()->get('admin_type') !== 'reseller')
                             <td>
                                 @if($order->payment_status=='paid')
