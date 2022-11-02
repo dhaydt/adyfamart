@@ -54,6 +54,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => ['api_l
     Route::get('country', 'AttributeController@country');
     Route::get('about_us', 'AttributeController@about_us');
     Route::get('privacy_policy', 'AttributeController@privacy_policy');
+    Route::get('termsandcondition', 'AttributeController@term_and_condition');
     Route::get('short-country', 'AttributeController@short_country');
 
     Route::get('faq', 'GeneralController@faq');

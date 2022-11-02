@@ -10,6 +10,17 @@ use Illuminate\Support\Facades\DB;
 
 class AttributeController extends Controller
 {
+    public function term_and_condition()
+    {
+        $term = BusinessSetting::where('type', 'terms_condition')->first();
+        $resp = [
+            'status' => 'success',
+            'data' => $term->value,
+        ];
+
+        return response()->json($resp, 200);
+    }
+
     public function about_us()
     {
         $about_us = BusinessSetting::where('type', 'about_us')->first();
