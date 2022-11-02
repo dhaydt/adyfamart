@@ -26,7 +26,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb breadcrumb-no-gutter">
                             <li class="breadcrumb-item"><a class="breadcrumb-link"
-                                                           href="{{route('admin.orders.list',['status'=>'all'])}}">{{\App\CPU\translate('Orders')}}</a>
+                                href="{{route('admin.orders.list',['status'=>'all'])}}">{{\App\CPU\translate('Orders')}}</a>
                             </li>
                             <li class="breadcrumb-item active"
                                 aria-current="page">{{\App\CPU\translate('Order')}} {{\App\CPU\translate('details')}} </li>
@@ -168,24 +168,20 @@
                             </div>
                             <div class="col-6 pt-2">
                                 <div class="text-right">
-                                    <h6 class="" style="color: #8a8a8a;">
-                                        {{\App\CPU\translate('Payment')}} {{\App\CPU\translate('Method')}}
-                                        : {{str_replace('_',' ',$order['payment_method'])}}
+                                    <h6 class="" style="color: #8a8a8a; text-capitalize">
+                                        {{\App\CPU\translate('Nama')}} {{\App\CPU\translate('Mitra')}}
+                                        : {{str_replace('_',' ',$order['mitra']['name'])}}
                                     </h6>
                                     <h6 class="" style="color: #8a8a8a;">
-                                        {{\App\CPU\translate('Payment')}} {{\App\CPU\translate('reference')}}
-                                        : {{str_replace('_',' ',$order['transaction_ref'])}}
+                                        {{\App\CPU\translate('Address')}}
+                                        : {{str_replace('_',' ',$order['mitra']['address'])}}
                                     </h6>
-                                    <h6 class="" style="color: #8a8a8a;">
-                                        {{\App\CPU\translate('shipping')}} {{\App\CPU\translate('method')}}
-                                        : {{$order->shipping ? $order->shipping->title :'No shipping method selected'}}
-                                    </h6>
-                                    @if (isset($order->delivery_date))
+                                    {{-- @if (isset($order->delivery_date))
                                     <h6 class="" style="color: #8a8a8a;">
                                         {{\App\CPU\translate('delivery')}} {{\App\CPU\translate('date')}}
                                         : <span style="color: #000; font-weight: 600;">{{date('j F, Y',strtotime($order->delivery_date ? $order->delivery_date : 'Tidak ada Tanggal'))}}</span>
                                     </h6>
-                                    @endif
+                                    @endif --}}
                                 </div>
                             </div>
                         </div>

@@ -260,6 +260,7 @@ class OrderManager
         $seller_data = Cart::where(['cart_group_id' => $cart_group_id])->first();
 
         $amount = CartManager::cart_grand_total($cart_group_id);
+        $admin_fee = Helpers::getAdminFee();
 
         $or = [
             'id' => $order_id,
@@ -277,11 +278,12 @@ class OrderManager
             'discount_amount' => $discount,
             'discount_type' => $discount == 0 ? null : 'coupon_discount',
             'coupon_code' => $coupon_code,
-            'order_amount' => $amount - $discount,
+            'order_amount' => $amount - $discount + $admin_fee,
             'shipping_address' => $address_id,
             'shipping_address_data' => ShippingAddress::find($address_id),
             'shipping_cost' => 0,
             'shipping_method_id' => 0,
+            'admin_fee' => $admin_fee,
             'id_mitra' => $seller_data->id_mitra,
             'created_at' => now(),
             'updated_at' => now(),

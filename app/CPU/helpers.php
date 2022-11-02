@@ -22,6 +22,13 @@ use Illuminate\Support\Facades\Session;
 
 class Helpers
 {
+    public static function getAdminFee()
+    {
+        $fee = BusinessSetting::where('type', 'admin_fee')->first();
+
+        return $fee['value'];
+    }
+
     public static function totalBelanja($user)
     {
         $order = Order::where('customer_id', $user->id)->pluck('order_amount');
