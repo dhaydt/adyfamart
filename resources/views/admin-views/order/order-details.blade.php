@@ -349,22 +349,33 @@
                         @php($shipping=$order['shipping_cost'])
                         @php($coupon_discount=$order['discount_amount'])
 
+
                         <div class="row justify-content-md-end mb-3">
                             <div class="col-md-9 col-lg-8">
                                 <dl class="row text-sm-right">
-                                    <dt class="col-sm-6">{{\App\CPU\translate('Shipping')}}</dt>
+                                    <dt class="col-sm-6">{{\App\CPU\translate('Admin_fee')}}</dt>
                                     <dd class="col-sm-6 border-bottom">
-                                        <strong>{{\App\CPU\BackEndHelper::set_symbol(\App\CPU\BackEndHelper::usd_to_currency($shipping))}}</strong>
+                                        <strong>{{\App\CPU\BackEndHelper::set_symbol(\App\CPU\BackEndHelper::usd_to_currency($order['admin_fee']))}}</strong>
                                     </dd>
 
-                                    <dt class="col-sm-6">{{\App\CPU\translate('coupon_discount')}}</dt>
+                                    {{-- <dt class="col-sm-6">{{\App\CPU\translate('coupon_discount')}}</dt>
                                     <dd class="col-sm-6 border-bottom">
                                         <strong>- {{\App\CPU\BackEndHelper::set_symbol(\App\CPU\BackEndHelper::usd_to_currency($coupon_discount))}}</strong>
+                                    </dd> --}}
+
+                                    <dt class="col-sm-6">{{\App\CPU\translate('Discount')}}</dt>
+                                    <dd class="col-sm-6 border-bottom">
+                                        <strong>- {{\App\CPU\BackEndHelper::set_symbol(\App\CPU\BackEndHelper::usd_to_currency($order['discount']))}}</strong>
+                                    </dd>
+
+                                    <dt class="col-sm-6">{{\App\CPU\translate('Item Price')}}</dt>
+                                    <dd class="col-sm-6 border-bottom">
+                                        <strong>{{\App\CPU\BackEndHelper::set_symbol(\App\CPU\BackEndHelper::usd_to_currency($order['order_amount'] - $order['admin_fee'] + $order['discount']))}}</strong>
                                     </dd>
 
                                     <dt class="col-sm-6">{{\App\CPU\translate('Total')}}</dt>
                                     <dd class="col-sm-6">
-                                        <strong>{{\App\CPU\BackEndHelper::set_symbol(\App\CPU\BackEndHelper::usd_to_currency($total+$shipping-$coupon_discount))}}</strong>
+                                        <strong>{{\App\CPU\BackEndHelper::set_symbol(\App\CPU\BackEndHelper::usd_to_currency($order['order_amount']))}}</strong>
                                     </dd>
                                 </dl>
                                 <!-- End Row -->
@@ -378,6 +389,87 @@
             </div>
 
             <div class="col-lg-4">
+                <div class="card mb-4">
+                    <!-- Header -->
+                    <div class="card-header">
+                        <h4 class="card-header-title">{{\App\CPU\translate('Mitra')}}</h4>
+                    </div>
+                    <!-- End Header -->
+
+                    <!-- Body -->
+                    @if($order->mitra)
+                        <div class="card-body">
+                            <div class="media align-items-center" href="javascript:">
+                                <div class="avatar avatar-circle mr-3">
+                                    <img
+                                        class="avatar-img" style="width: 75px;height: 42px"
+                                        onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
+                                        src="{{asset('storage/app/public/admin/'.$order->mitra->image)}}"
+                                        alt="Image">
+                                </div>
+                                <div class="media-body">
+                                <span
+                                    class="text-body text-hover-primary text-capitalize">{{$order->mitra['name']}}</span>
+                                </div>
+                                <div class="media-body text-right">
+                                    {{--<i class="tio-chevron-right text-body"></i>--}}
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="media align-items-center" href="javascript:">
+                                <div class="icon icon-soft-info icon-circle mr-3">
+                                    <i class="tio-shopping-basket-outlined"></i>
+                                </div>
+                                <div class="media-body">
+                                    <span class="text-body text-hover-primary"> {{\App\Model\Order::where('id_mitra',$order['mitra']['code_admin'])->count()}} {{\App\CPU\translate('orders')}}</span>
+                                </div>
+                                <div class="media-body text-right">
+                                    {{--<i class="tio-chevron-right text-body"></i>--}}
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5>{{\App\CPU\translate('Contact')}} {{\App\CPU\translate('info')}} </h5>
+                            </div>
+
+                            <ul class="list-unstyled list-unstyled-py-2">
+                                <li>
+                                    <i class="tio-online mr-2"></i>
+                                    {{$order->mitra['email']}}
+                                </li>
+                                <li>
+                                    <i class="tio-android-phone-vs mr-2"></i>
+                                    {{$order->mitra['phone']}}
+                                </li>
+                            </ul>
+
+                            <hr>
+
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5>{{\App\CPU\translate('shipping_address')}}</h5>
+
+                            </div>
+
+                            @if($order->shippingAddress)
+                                @php($shipping=$order->shippingAddress)
+                            @else
+                                @php($shipping=json_decode($order['shipping_address_data']))
+                            @endif
+
+                            <span class="d-block">{{\App\CPU\translate('Address')}} :
+                                <strong>{{ $order['mitra']['address'] }}</strong>
+                            </span>
+                        </div>
+                @endif
+                <!-- End Body -->
+                </div>
+                <!-- End Card -->
+
                 <!-- Card -->
                 <div class="card">
                     <!-- Header -->
@@ -429,7 +521,7 @@
                             <ul class="list-unstyled list-unstyled-py-2">
                                 <li>
                                     <i class="tio-online mr-2"></i>
-                                    {{$order->customer['email']}}
+                                    {{$order->customer['email'] ?? \App\CPU\translate('No_email_found')}}
                                 </li>
                                 <li>
                                     <i class="tio-android-phone-vs mr-2"></i>
@@ -440,7 +532,7 @@
                             <hr>
 
 
-                            <div class="d-flex justify-content-between align-items-center">
+                            {{-- <div class="d-flex justify-content-between align-items-center">
                                 <h5>{{\App\CPU\translate('shipping_address')}}</h5>
 
                             </div>
@@ -463,7 +555,7 @@
                                 <strong>{{$shipping ? $shipping->address  : \App\CPU\translate('empty')}}</strong><br>
                                 {{\App\CPU\translate('Phone')}}:
                                 <strong>{{$shipping ? $shipping->phone  : \App\CPU\translate('empty')}}</strong>
-                            </span>
+                            </span> --}}
                         </div>
                 @endif
                 <!-- End Body -->
