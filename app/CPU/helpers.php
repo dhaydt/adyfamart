@@ -31,7 +31,7 @@ class Helpers
 
     public static function totalBelanja($id)
     {
-        $order = Order::where('customer_id', $id)->pluck('order_amount');
+        $order = Order::where('customer_id', $id)->where('order_status', 'pending')->orWhere('order_status', 'processing')->pluck('order_amount');
         $total = 0;
         if ($order) {
             $total = [];
