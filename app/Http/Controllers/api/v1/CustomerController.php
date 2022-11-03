@@ -210,7 +210,7 @@ class CustomerController extends Controller
             return response()->json(['errors' => Helpers::error_processor($validator)], 403);
         }
 
-        $details = OrderDetail::where(['order_id' => $request['order_id']])->get();
+        $details = OrderDetail::with('order')->where(['order_id' => $request['order_id']])->get();
         $details->map(function ($query) {
             $query['variation'] = json_decode($query['variation'], true);
             $query['product_details'] = Helpers::product_data_formatting(json_decode($query['product_details'], true));
