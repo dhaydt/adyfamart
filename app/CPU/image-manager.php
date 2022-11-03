@@ -24,10 +24,10 @@ class ImageManager
         } else {
             if ($image != null) {
                 $imageName = Carbon::now()->toDateString().'-'.uniqid().'.'.$format;
-                if (!Storage::disk('public')->exists('/app/public/'.$dir)) {
-                    Storage::disk('public')->makeDirectory('/app/public/'.$dir);
+                if (!Storage::disk('public')->exists($dir)) {
+                    Storage::disk('public')->makeDirectory($dir);
                 }
-                Storage::disk('public')->put('/app/public/'.$dir.$imageName, file_get_contents($image));
+                Storage::disk('public')->put($dir.$imageName, file_get_contents($image));
             } else {
                 $imageName = 'def.png';
             }
