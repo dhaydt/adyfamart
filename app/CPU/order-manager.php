@@ -291,7 +291,9 @@ class OrderManager
 
         $limit = Helpers::getMitra($user->reseller_id)['wallet']['saldo'];
 
-        if ($limit < $amount) {
+        $total = Helpers::totalBelanja($user->id);
+
+        if ($limit < ($total + $amount)) {
             return 'limited';
         }
 

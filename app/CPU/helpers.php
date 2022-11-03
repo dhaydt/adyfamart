@@ -29,16 +29,16 @@ class Helpers
         return $fee['value'];
     }
 
-    public static function totalBelanja($user)
+    public static function totalBelanja($id)
     {
-        $order = Order::where('customer_id', $user->id)->pluck('order_amount');
+        $order = Order::where('customer_id', $id)->pluck('order_amount');
         $total = 0;
         if ($order) {
             $total = [];
             foreach ($order as $o) {
                 array_push($total, $o);
             }
-            $total = array_sum($order);
+            $total = array_sum($total);
         }
 
         return $total;
