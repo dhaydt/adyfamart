@@ -23,8 +23,9 @@ class CustomerController extends Controller
     public function info(Request $request)
     {
         $user = $request->user()->toArray();
+        $belanja = Helpers::totalBelanja($user['id']);
         $mitra = Helpers::getMitra($user['reseller_id']);
-        $user['saldo'] = $mitra->wallet->saldo;
+        $user['saldo'] = $mitra->wallet->saldo - $belanja;
 
         return response()->json($user, 200);
     }
