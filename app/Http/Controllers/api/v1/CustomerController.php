@@ -23,7 +23,7 @@ class CustomerController extends Controller
     public function info(Request $request)
     {
         $user = $request->user()->toArray();
-        $belanja = Helpers::totalBelanja($request->user()->iid);
+        $belanja = Helpers::totalBelanja($request->user()->id);
 
         // dd($belanja);
         $mitra = Helpers::getMitra($user['reseller_id']);
