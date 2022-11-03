@@ -19,6 +19,7 @@ class CartController extends Controller
         $cart->map(function ($data) {
             $data['choices'] = json_decode($data['choices']);
             $data['variations'] = json_decode($data['variations']);
+            $data['admin_fee'] = Helpers::getAdminFee();
 
             return $data;
         });
