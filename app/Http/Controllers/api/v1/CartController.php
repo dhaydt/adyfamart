@@ -23,6 +23,7 @@ class CartController extends Controller
 
             return $data;
         });
+        $cart['saldo'] = Helpers::totalBelanja($user->id);
 
         return response()->json($cart, 200);
     }
