@@ -130,7 +130,9 @@
                         @endif --}}
                         {{-- <th>{{\App\CPU\translate('payment')}}</th> --}}
                         <th>{{\App\CPU\translate('Total')}}</th>
+                        <th>{{\App\CPU\translate('Saldo')}}</th>
                         <th>{{\App\CPU\translate('Order')}} {{\App\CPU\translate('Status')}} </th>
+                        <th>{{\App\CPU\translate('Periode')}} </th>
                         <th>{{\App\CPU\translate('Action')}}</th>
                     </tr>
                     </thead>
@@ -186,6 +188,7 @@
                                 {{str_replace('_',' ',$order['payment_method'])}}
                             </td> --}}
                             <td> {{\App\CPU\BackEndHelper::set_symbol(\App\CPU\BackEndHelper::usd_to_currency($order->order_amount))}}</td>
+                            <td>{{ \App\CPU\Helpers::getSaldoUser($order->customer_id) }}</td>
                             <td class="text-capitalize">
                                 @if($order['order_status']=='pending')
                                     <span class="badge badge-soft-info ml-2 ml-sm-3">
@@ -213,6 +216,11 @@
                                         <span class="legend-indicator bg-success"
                                               style="{{Session::get('direction') === "rtl" ? 'margin-right: 0;margin-left: .4375rem;' : 'margin-left: 0;margin-right: .4375rem;'}}"></span>{{\App\CPU\translate($order['order_status'])}}
                                       </span>
+                                @elseif($order['order_status']=='returned')
+                                    <span class="badge badge-soft-danger ml-2 ml-sm-3">
+                                        <span class="legend-indicator bg-danger"
+                                              style="{{Session::get('direction') === "rtl" ? 'margin-right: 0;margin-left: .4375rem;' : 'margin-left: 0;margin-right: .4375rem;'}}"></span>{{\App\CPU\translate('reject')}}
+                                      </span>
                                 @else
                                     <span class="badge badge-soft-danger ml-2 ml-sm-3">
                                         <span class="legend-indicator bg-danger"
@@ -220,6 +228,7 @@
                                       </span>
                                 @endif
                             </td>
+                            <td>{{ $order['periode'] }}</td>
                             <td>
                                 <div class="dropdown">
                                     <button class="btn btn-outline-secondary dropdown-toggle" type="button"

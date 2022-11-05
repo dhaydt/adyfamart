@@ -58,9 +58,9 @@
                             <span class="badge badge-soft-warning ml-2 ml-sm-3 text-capitalize">
                               <span class="legend-indicator bg-warning"></span>{{str_replace('_',' ',$order['order_status'])}}
                             </span>
-                        @elseif($order['order_status']=='delivered' || $order['order_status']=='confirmed')
-                            <span class="badge badge-soft-success ml-2 ml-sm-3 text-capitalize">
-                              <span class="legend-indicator bg-success"></span>{{str_replace('_',' ',$order['order_status'])}}
+                        @elseif($order['order_status']=='returned')
+                            <span class="badge badge-soft-danger ml-2 ml-sm-3 text-capitalize">
+                              <span class="legend-indicator bg-danger"></span>{{str_replace('_',' ', 'Reject')}}
                             </span>
                         @else
                             <span class="badge badge-soft-danger ml-2 ml-sm-3 text-capitalize">

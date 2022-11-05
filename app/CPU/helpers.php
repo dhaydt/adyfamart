@@ -23,6 +23,30 @@ use Illuminate\Support\Facades\Session;
 
 class Helpers
 {
+    public static function getSaldoUser($id)
+    {
+        $periode = Helpers::getPeriode();
+        $orders = Order::with('mitra')->where(['customer_id' => $id, 'periode' => $periode])->get();
+        $total = 0;
+
+        if (count($orders) > 0) {
+            foreach ($orders as $order) {
+                $total = [];
+                if ($order->order_status == 'pending' || $order->order_status == 'processing') {
+                    array_push($total, $order->order_amount);
+                }
+                $total = array_sum($total);
+            }
+        }
+
+        $customer = User::where('id', $id)->first();
+        $mitra = Admin::with('wallet')->where('code_admin', $customer['reseller_id'])->first();
+
+        $total = $mitra->wallet->saldo - $total;
+
+        return $total;
+    }
+
     public static function getPeriode()
     {
         $periode = Periode::where('status', 1)->first();
