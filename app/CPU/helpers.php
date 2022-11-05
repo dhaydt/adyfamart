@@ -29,15 +29,13 @@ class Helpers
         $orders = Order::with('mitra')->where(['customer_id' => $id, 'periode' => $periode])->get();
         $total = 0;
 
-        if (count($orders) > 0) {
-            foreach ($orders as $order) {
-                $total = [];
-                if ($order->order_status == 'pending' || $order->order_status == 'processing') {
-                    array_push($total, $order->order_amount);
-                }
-                $total = array_sum($total);
+        $total = [];
+        foreach ($orders as $order) {
+            if ($order->order_status == 'pending' || $order->order_status == 'processing') {
+                array_push($total, $order->order_amount);
             }
         }
+        $total = array_sum($total);
 
         $customer = User::where('id', $id)->first();
         $mitra = Admin::with('wallet')->where('code_admin', $customer['reseller_id'])->first();
@@ -65,14 +63,15 @@ class Helpers
     {
         $periode = Helpers::getPeriode();
         $orders = Order::where(['customer_id' => $id, 'periode' => $periode])->get();
+
         $total = 0;
+        $total = [];
         foreach ($orders as $order) {
-            $total = [];
             if ($order->order_status == 'pending' || $order->order_status == 'processing') {
                 array_push($total, $order->order_amount);
             }
-            $total = array_sum($total);
         }
+        $total = array_sum($total);
 
         return $total;
     }
