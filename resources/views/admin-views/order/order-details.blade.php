@@ -95,7 +95,17 @@
                                     :{{$linked['id']}}</a>
                             @endforeach
                         </div>
-
+                        @if (session()->get('admin_type') == 'reseller')
+                        <div class="col-6 d-flex justify-content-end my-2">
+                            @if ($order->order_status == 'pending')
+                                <button class="btn btn-sm btn-danger mr-3" onclick="order_status('returned')">Reject</button>
+                                <button class="btn btn-success btn-sm" onclick="order_status('processing')">Proccess Order</button>
+                            @endif
+                            @if($order->order_status == 'processing')
+                                <button class="btn btn-sm btn-danger mr-3" onclick="order_status('canceled')">Cancel Order</button>
+                            @endif
+                            </div>
+                        @else
                         <div class="col-6">
                             <div class="hs-unfold float-right">
                                 <div class="dropdown">
@@ -106,19 +116,11 @@
                                         <option
                                             value="pending" {{$order->order_status == 'pending'?'selected':''}} > {{\App\CPU\translate('Pending')}}</option>
                                         <option
-                                            value="confirmed" {{$order->order_status == 'confirmed'?'selected':''}} > {{\App\CPU\translate('Confirmed')}}</option>
-                                        <option
                                             value="processing" {{$order->order_status == 'processing'?'selected':''}} >{{\App\CPU\translate('Processing')}} </option>
-                                        <option class="text-capitalize"
-                                                value="out_for_delivery" {{$order->order_status == 'out_for_delivery'?'selected':''}} >{{\App\CPU\translate('out_for_delivery')}} </option>
-                                        <option
-                                            value="delivered" {{$order->order_status == 'delivered'?'selected':''}} >{{\App\CPU\translate('Delivered')}} </option>
-                                        <option
-                                            value="returned" {{$order->order_status == 'returned'?'selected':''}} > {{\App\CPU\translate('Returned')}}</option>
-                                        <option
-                                            value="failed" {{$order->order_status == 'failed'?'selected':''}} >{{\App\CPU\translate('Failed')}} </option>
-                                        <option
+                                            <option
                                             value="canceled" {{$order->order_status == 'canceled'?'selected':''}} >{{\App\CPU\translate('Canceled')}} </option>
+                                        <option
+                                            value="returned" {{$order->order_status == 'returned'?'selected':''}} > {{\App\CPU\translate('reject')}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -141,6 +143,8 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
+
                     </div>
                     <!-- End Unfold -->
                 </div>

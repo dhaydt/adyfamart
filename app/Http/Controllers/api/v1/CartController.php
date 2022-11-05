@@ -24,7 +24,11 @@ class CartController extends Controller
             return $data;
         });
         $mitra = Helpers::getMitra($user['reseller_id']);
-        $cart['saldo'] = $mitra->wallet->saldo - Helpers::totalBelanja($user->id);
+        $saldo = $mitra->wallet->saldo - Helpers::totalBelanja($user->id);
+        if ($saldo < 0) {
+            $saldo = 0;
+        }
+        $cart['saldo'] = $saldo;
 
         return response()->json($cart, 200);
     }
