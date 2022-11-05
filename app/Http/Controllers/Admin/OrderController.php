@@ -171,19 +171,20 @@ class OrderController extends Controller
     public function status(Request $request)
     {
         $order = Order::find($request->id);
-        $fcm_token = $order->customer->cm_firebase_token;
-        $value = Helpers::order_status_update_message($request->order_status);
         try {
+            $fcm_token = $order->customer->cm_firebase_token;
+            $value = Helpers::order_status_update_message($request->order_status);
+
             if ($value) {
                 $data = [
-                    'title' => translate('Order'),
+                    'title' => translate('order'),
                     'description' => $value,
-                    'order_id' => $order['id'],
+                    'order_id' => $$request->id,
                     'image' => '',
                 ];
                 Helpers::send_push_notif_to_device($fcm_token, $data);
             }
-        } catch (\Exception $e) {
+        } catch (\Exception $exception) {
         }
 
         $order->order_status = $request->order_status;
