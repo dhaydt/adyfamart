@@ -25,7 +25,6 @@ class CustomerController extends Controller
         $user = $request->user()->toArray();
         $belanja = Helpers::totalBelanja($request->user()->id);
 
-        // dd($belanja);
         $mitra = Helpers::getMitra($user['reseller_id']);
         $saldo = $mitra->wallet->saldo - $belanja;
         if ($saldo < 0) {

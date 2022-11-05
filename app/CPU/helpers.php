@@ -31,12 +31,12 @@ class Helpers
 
     public static function totalBelanja($id)
     {
-        $order = Order::where('customer_id', $id)->where('order_status', 'pending')->orWhere('order_status', 'processing')->pluck('order_amount');
+        $orders = Order::where('customer_id', $id)->get();
         $total = 0;
-        if ($order) {
+        foreach ($orders as $order) {
             $total = [];
-            foreach ($order as $o) {
-                array_push($total, $o);
+            if ($order->order_status == 'pending' || $order->order_status == 'processing') {
+                array_push($total, $order->order_amount);
             }
             $total = array_sum($total);
         }
