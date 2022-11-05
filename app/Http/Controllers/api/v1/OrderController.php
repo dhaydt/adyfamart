@@ -64,6 +64,22 @@ class OrderController extends Controller
                 'order_status' => 'canceled',
             ]);
 
+        try {
+            $fcm_token = $order->customer->cm_firebase_token;
+            $value = 'Order anda telah dibatalkan';
+
+            if ($value) {
+                $data = [
+                        'title' => translate('order'),
+                        'description' => $value,
+                        'order_id' => $id,
+                        'image' => '',
+                    ];
+                Helpers::send_push_notif_to_device($fcm_token, $data);
+            }
+        } catch (\Exception $exception) {
+        }
+
         return response()->json(translate('order_canceled_successfully'), 200);
         // }
         // if ($order['payment_method'] != 'cash_on_delivery' && $order['order_status'] == 'pending') {
