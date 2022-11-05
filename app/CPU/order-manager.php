@@ -261,6 +261,7 @@ class OrderManager
 
         $amount = CartManager::cart_grand_total($cart_group_id);
         $admin_fee = Helpers::getAdminFee();
+        $periode = Helpers::getPeriode();
 
         $or = [
             'id' => $order_id,
@@ -284,6 +285,7 @@ class OrderManager
             'shipping_cost' => 0,
             'shipping_method_id' => 0,
             'admin_fee' => $admin_fee,
+            'periode' => $periode,
             'id_mitra' => $seller_data->id_mitra,
             'created_at' => now(),
             'updated_at' => now(),

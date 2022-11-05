@@ -43,6 +43,97 @@
                 </div>
             </div>
         </div>
+        @php($periodes = \App\Periode::orderBy('created_at', 'desc')->get())
+        <div class="col-md-6">
+            <div class="card-header d-flex justify-content-between">
+                <h5>{{\App\CPU\translate('Order_periode')}}</h5>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                    <i class="fas fa-plus"></i> Periode
+                </button>
+            </div>
+            <div class="card">
+                <div class="card-body" style="padding: 20px">
+                    <div class="table-responsive">
+                        <table id="columnSearchDatatable" style="text-align: left;"
+                            class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table">
+                            <thead class="thead-light text-center">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                @if (count($periodes) > 0)
+                                @foreach ($periodes as $key => $periode)
+                                <tr>
+                                    <td>
+                                        {{ $periode->name }}
+                                    </td>
+                                    <td>
+                                        <label class="switch switch-status">
+                                            <input type="checkbox" class="status" id="{{$periode['id']}}"
+                                                onclick="statusChange({{$periode->id}}, this.value)" {{ $periode->status
+                                            == 1?'checked':''}} value="{{ $periode->status }}">
+                                            <span class="slider round"></span>
+                                        </label>
+                                        <label class="ml-3" for="status-{{ $periode->id }}">
+                                            @if ($periode->status == 1)
+                                            Active
+                                            @else
+                                            Disabled
+                                            @endif
+                                        </label>
+                                    </td>
+                                </tr>
+                                @endforeach
+                                @else
+                                <tr>
+                                    <td colspan="3" class="text-center">
+                                        Tidak ada data periode
+                                    </td>
+                                </tr>
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <form id="formPeriode" action="{{ route('admin.business-settings.periode.update') }}" method="POST">
+                    @csrf
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Tambah Periode Order</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Kode Periode</label>
+                                <input type="text" name="name" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Status</label>
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" name="status" value="0" onclick="changeStatus(this.value)"
+                                        class="custom-control-input" id="customSwitch1">
+                                    <label class="custom-control-label" for="customSwitch1" id="status">Non
+                                        Active</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
 
     </div>
 
@@ -58,6 +149,71 @@
 <script src="{{asset('public/assets/back-end')}}/js/tags-input.min.js"></script>
 <script src="{{ asset('public/assets/select2/js/select2.min.js')}}"></script>
 <script>
+    function statusChange(id, value){
+        console.log('val', id, value);
+        Swal.fire({
+                title: '{{\App\CPU\translate('Are you sure to change status')}}?',
+                text: '',
+                type: 'warning',
+                showCancelButton: true,
+                cancelButtonColor: 'default',
+                confirmButtonColor: '#377dff',
+                cancelButtonText: 'No',
+                confirmButtonText: 'Yes',
+                reverseButtons: true
+            }).then((result) => {
+
+                var data = {
+                    id: id,
+                    val: value
+                }
+
+                var json = JSON.stringify(data);
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.post({
+                    url: '{{route('admin.business-settings.periode.status')}}',
+                    data: json,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.errors) {
+                            for (var i = 0; i < data.errors.length; i++) {
+                                toastr.error(data.errors[i].message, {
+                                    CloseButton: true,
+                                    ProgressBar: true
+                                });
+                            }
+                        } else {
+                            if(data == 'success'){
+                                toastr.success('{{\App\CPU\translate('Status changed successfully')}}!', {
+                                    CloseButton: true,
+                                    ProgressBar: true
+                                });
+                                location.reload();
+                            }else{
+                                toastr.warning('{{\App\CPU\translate('all statuses cant be turned off')}}!', {
+                                    CloseButton: true,
+                                });
+                                location.reload();
+                            }
+                        }
+                    }
+                });
+            })
+    }
+    function changeStatus(val){
+        if(val == 0){
+            $('input[name=status]').val(1);
+            $('#status').text('Active');
+        }else{
+            $('input[name=status]').val(0);
+            $('#status').text('Non Active');
+        }
+    }
     function readWLURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();

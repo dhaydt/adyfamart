@@ -15,6 +15,7 @@ use App\Model\Review;
 use App\Model\Seller;
 use App\Model\ShippingAddress;
 use App\Model\ShippingMethod;
+use App\Periode;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
@@ -22,6 +23,13 @@ use Illuminate\Support\Facades\Session;
 
 class Helpers
 {
+    public static function getPeriode()
+    {
+        $periode = Periode::where('status', 1)->first();
+
+        return $periode->name;
+    }
+
     public static function getAdminFee()
     {
         $fee = BusinessSetting::where('type', 'admin_fee')->first();
@@ -31,7 +39,8 @@ class Helpers
 
     public static function totalBelanja($id)
     {
-        $orders = Order::where('customer_id', $id)->get();
+        $periode = Helpers::getPeriode();
+        $orders = Order::where(['customer_id' => $id, 'periode' => $periode])->get();
         $total = 0;
         foreach ($orders as $order) {
             $total = [];

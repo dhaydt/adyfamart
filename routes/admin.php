@@ -317,6 +317,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
                 Route::get('', 'MailController@index')->name('index');
                 Route::post('update', 'MailController@update')->name('update');
             });
+            Route::group(['prefix' => 'periode', 'as' => 'periode.', 'middleware' => ['module:web_&_app_settings']], function () {
+                Route::post('update', 'PeriodeController@update')->name('update');
+                Route::post('status', 'PeriodeController@status')->name('status');
+            });
 
             Route::group(['prefix' => 'web-config', 'as' => 'web-config.', 'middleware' => ['module:web_&_app_settings']], function () {
                 Route::get('/', 'BusinessSettingsController@companyInfo')->name('index');
