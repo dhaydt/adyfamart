@@ -31,7 +31,7 @@ class OrderController extends Controller
         $maintenance_mode = Helpers::get_business_settings('maintenance_mode') ?? 0;
 
         if ($maintenance_mode) {
-            return response()->json(['status' => 200, 'message' => 'Maintenance Mode']);
+            return response()->json(['status' => 200, 'message' => 'Sedang Peralihan Periode!, Mohon Tunggu beberapa menit.']);
         }
 
         $unique_id = $request->user()->id.'-'.rand(000001, 999999).'-'.time();

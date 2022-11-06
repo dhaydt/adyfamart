@@ -16,10 +16,30 @@
         </ol>
     </nav>
 
+    <div class="card mb-4">
+        <div class="card-body" style="padding-bottom: 12px">
+            <div class="row flex-between mx-1">
+                @php($config=\App\CPU\Helpers::get_business_settings('maintenance_mode'))
+                <div class="flex-between">
+                    <h5 class="{{Session::get('direction') === "rtl" ? 'ml-1' : 'mr-1'}}"><i
+                            class="tio-settings-outlined"></i></h5>
+                    <h5>{{\App\CPU\translate('Cut_Off_Transactions')}}</h5>
+                </div>
+                <div>
+                    <label
+                        class="switch ml-3 float-{{Session::get('direction') === "rtl" ? 'left' : 'right'}}">
+                        <input type="checkbox" class="status" onclick="maintenance_mode()"
+                            {{isset($config) && $config?'checked':''}}>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-2">
-        <h4 class="mb-0 text-black-50">{{\App\CPU\translate('admin')}} {{\App\CPU\translate('fee')}}
-            {{\App\CPU\translate('Informations')}} </h4>
+        <h4 class="mb-0 text-black-50">{{\App\CPU\translate('Mitra')}} {{\App\CPU\translate('Settings')}} </h4>
     </div>
 
     <div class="row" style="padding-bottom: 20px">
@@ -321,6 +341,39 @@
 ])
 
 <script>
+    function maintenance_mode() {
+            Swal.fire({
+                title: '{{\App\CPU\translate('Are you sure')}}?',
+                text: '{{\App\CPU\translate('Be careful before you turn on/off maintenance mode')}}',
+                type: 'warning',
+                showCancelButton: true,
+                cancelButtonColor: 'default',
+                confirmButtonColor: '#377dff',
+                cancelButtonText: 'No',
+                confirmButtonText: 'Yes',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    $.get({
+                        url: '{{route('admin.maintenance-mode')}}',
+                        contentType: false,
+                        processData: false,
+                        beforeSend: function () {
+                            $('#loading').show();
+                        },
+                        success: function (data) {
+                            toastr.success(data.message);
+                        },
+                        complete: function () {
+                            $('#loading').hide();
+                        },
+                    });
+                } else {
+                    location.reload();
+                }
+            })
+        };
+
     $(document).ready(function () {
             $('.color-var-select').select2({
                 templateResult: colorCodeSelect,
