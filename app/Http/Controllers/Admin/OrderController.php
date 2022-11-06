@@ -254,7 +254,7 @@ class OrderController extends Controller
         $data['client_name'] = $order->customer['f_name'].' '.$order->customer['l_name'];
         $data['order'] = $order;
 
-        return view('admin-views.order.invoice')->with('order', $order)->with('seller', $seller);
+        // return view('admin-views.order.invoice')->with('order', $order)->with('seller', $seller);
 
         $mpdf_view = \View::make('admin-views.order.invoice')->with('order', $order)->with('seller', $seller);
         Helpers::gen_mpdf($mpdf_view, 'order_invoice_', $order->id);
