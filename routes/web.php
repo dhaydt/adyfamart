@@ -14,13 +14,13 @@
 use Illuminate\Support\Facades\Route;
 
 //for maintenance mode
+Route::get('/', (function () {
+    return redirect()->route('admin.auth.login');
+}))->name('home');
 Route::get('maintenance-mode', 'Web\WebController@maintenance_mode')->name('maintenance-mode');
 
 Route::group(['namespace' => 'Web', 'middleware' => ['maintenance_mode']], function () {
     // Route::get('/', 'WebController@home')->name('home');
-    Route::get('/', (function () {
-        return redirect()->route('admin.auth.login');
-    }))->name('home');
     Route::get('quick-view', 'WebController@quick_view')->name('quick-view');
     Route::get('searched-products', 'WebController@searched_products')->name('searched-products');
 
