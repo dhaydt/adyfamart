@@ -445,8 +445,10 @@
                     <td class="for-tb for-th-font-bold">{{$key+1}}</td>
                     <td class="for-tb">
                         {{$details['product']?$details['product']->name:''}}
+                        @if ($details['variant'] !== '')
                         <br>
                         {{\App\CPU\translate('variation')}} : {{$details['variant']}}
+                        @endif
                     </td>
                     <td>
                         {{ $order->mitra->name }}
