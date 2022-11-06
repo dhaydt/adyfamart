@@ -395,12 +395,12 @@
                 </td>
                 <td>
                     <div class="h4 montserrat-normal-600">
-                        <p style=" margin-top: 6px; margin-bottom:0px;">{{$order->customer['f_name'].' '.$order->customer['l_name']}}</p>
+                        <p style=" margin-top: 6px; margin-bottom:0px;">{{$order->customer['f_name']}}</p>
                         <p style=" margin-top: 6px; margin-bottom:0px;">{{$order->customer['email']}}</p>
                         <p style=" margin-top: 6px; margin-bottom:0px;">{{$order->customer['phone']}}</p>
-                        <p style=" margin-top: 6px; margin-bottom:0px;">{{$order->shippingAddress ? $order->shippingAddress['address'] : ""}}</p>
+                        {{-- <p style=" margin-top: 6px; margin-bottom:0px;">{{$order->shippingAddress ? $order->shippingAddress['address'] : ""}}</p>
                         <p style=" margin-top: 6px; margin-bottom:0px;">{{$order->shippingAddress ? $order->shippingAddress['city'] : ""}} {{$order->shippingAddress ? $order->shippingAddress['zip'] : ""}}</p>
-                        <p style=" margin-top: 6px; margin-bottom:0px;">{{$order->shippingAddress ? $order->shippingAddress['country'] : ""}}</p>
+                        <p style=" margin-top: 6px; margin-bottom:0px;">{{$order->shippingAddress ? $order->shippingAddress['country'] : ""}}</p> --}}
                     </div>
                 </td>
             </tr>
@@ -418,6 +418,7 @@
             <tr class="for-th">
                 <th class="for-th bg-primary">{{\App\CPU\translate('no.')}}</th>
                 <th class="for-th bg-primary">{{\App\CPU\translate('item_description')}}</th>
+                <th class="for-th bg-primary">{{\App\CPU\translate('Mitra')}}</th>
                 <th class="for-th bg-secondary for-th-font-bold" style="color: black">
                     {{\App\CPU\translate('unit_price')}}
                 </th>
@@ -446,6 +447,9 @@
                         {{$details['product']?$details['product']->name:''}}
                         <br>
                         {{\App\CPU\translate('variation')}} : {{$details['variant']}}
+                    </td>
+                    <td>
+                        {{ $order->mitra->name }}
                     </td>
                     <td class="for-tb for-th-font-bold">{{\App\CPU\BackEndHelper::set_symbol(\App\CPU\BackEndHelper::usd_to_currency($details['price']))}}</td>
                     <td class="for-tb">{{$details->qty}}</td>
@@ -488,8 +492,8 @@
                         <td>{{\App\CPU\BackEndHelper::set_symbol(\App\CPU\BackEndHelper::usd_to_currency($total_tax))}}</td>
                     </tr>
                     <tr>
-                        <th class="gry-color text-left"><b>{{\App\CPU\translate('shipping')}}</b></th>
-                        <td>{{\App\CPU\BackEndHelper::set_symbol(\App\CPU\BackEndHelper::usd_to_currency($shipping))}}</td>
+                        <th class="gry-color text-left"><b>{{\App\CPU\translate('Admin_fee')}}</b></th>
+                        <td>{{\App\CPU\BackEndHelper::set_symbol(\App\CPU\BackEndHelper::usd_to_currency($order->admin_fee))}}</td>
                     </tr>
                     <tr>
                         <th class="gry-color text-left"><b>{{\App\CPU\translate('coupon_discount')}}</b></th>

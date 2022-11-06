@@ -8,7 +8,6 @@ use function App\CPU\translate;
 use App\Http\Controllers\Controller;
 use App\Model\Order;
 use App\Model\OrderTransaction;
-use App\Model\Seller;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -243,11 +242,14 @@ class OrderController extends Controller
 
     public function generate_invoice($id)
     {
-        $order = Order::with('seller')->with('shipping')->with('details')->where('id', $id)->first();
-        $seller = Seller::findOrFail($order->details->first()->seller_id);
+        $order = Order::with('seller', 'mitra')->with('shipping')->with('details')->where('id', $id)->first();
+        $seller = [];
+
         $data['email'] = $order->customer['email'];
         $data['client_name'] = $order->customer['f_name'].' '.$order->customer['l_name'];
         $data['order'] = $order;
+
+        return view('admin-views.order.invoice')->with('order', $order)->with('seller', $seller);
 
         $mpdf_view = \View::make('admin-views.order.invoice')->with('order', $order)->with('seller', $seller);
         Helpers::gen_mpdf($mpdf_view, 'order_invoice_', $order->id);
