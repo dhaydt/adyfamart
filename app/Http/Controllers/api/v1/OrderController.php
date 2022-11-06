@@ -28,6 +28,12 @@ class OrderController extends Controller
 
     public function place_order(Request $request)
     {
+        $maintenance_mode = Helpers::get_business_settings('maintenance_mode') ?? 0;
+
+        if ($maintenance_mode) {
+            return response()->json(['status' => 200, 'message' => 'Maintenance Mode']);
+        }
+
         $unique_id = $request->user()->id.'-'.rand(000001, 999999).'-'.time();
         $order_ids = [];
         foreach (CartManager::get_cart_group_ids($request) as $group_id) {

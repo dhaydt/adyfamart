@@ -35,6 +35,12 @@ class CartController extends Controller
 
     public function add_to_cart(Request $request)
     {
+        $maintenance_mode = Helpers::get_business_settings('maintenance_mode') ?? 0;
+
+        if ($maintenance_mode) {
+            return response()->json(['status' => 200, 'message' => 'Maintenance Mode']);
+        }
+
         $validator = Validator::make($request->all(), [
             'id' => 'required',
             'quantity' => 'required',
@@ -53,6 +59,12 @@ class CartController extends Controller
 
     public function update_cart(Request $request)
     {
+        $maintenance_mode = Helpers::get_business_settings('maintenance_mode') ?? 0;
+
+        if ($maintenance_mode) {
+            return response()->json(['status' => 200, 'message' => 'Maintenance Mode']);
+        }
+
         $validator = Validator::make($request->all(), [
             'key' => 'required',
             'quantity' => 'required',
