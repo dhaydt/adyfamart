@@ -665,6 +665,7 @@
                             "order_status": status
                         },
                         success: function (data) {
+                            console.log('resp', data)
                             if (data.success == 0) {
                                 toastr.success('{{\App\CPU\translate('Order is already delivered, You can not change it')}} !!');
                                 location.reload();

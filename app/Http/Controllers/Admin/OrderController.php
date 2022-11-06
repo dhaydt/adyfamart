@@ -196,15 +196,20 @@ class OrderController extends Controller
     public function status(Request $request)
     {
         $order = Order::find($request->id);
+
         try {
             $fcm_token = $order->customer->cm_firebase_token;
             $value = Helpers::order_status_update_message($request->order_status);
+
+            if ($request->order_status == 'canceled') {
+                $value = 'Order anda telah dibatalkan!';
+            }
 
             if ($value) {
                 $data = [
                     'title' => translate('order'),
                     'description' => $value,
-                    'order_id' => $$request->id,
+                    'order_id' => $order['id'],
                     'image' => '',
                 ];
                 Helpers::send_push_notif_to_device($fcm_token, $data);
