@@ -893,10 +893,10 @@ class Helpers
         foreach ($user as $s) {
             if ($s !== null) {
                 $notif = [
-                    'title' => $data->title,
-                    'body' => $data->description,
+                    'title' => $data->title ?? '',
+                    'body' => $data->description ?? '',
                     'image' => $image,
-                    'title_loc_key' => $data['order_id'],
+                    'title_loc_key' => '',
                     'is_read' => 0,
                     'icon' => 'new',
                     'sound' => 'default',
