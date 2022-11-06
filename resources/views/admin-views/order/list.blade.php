@@ -96,14 +96,14 @@
                             <!-- End Search -->
                         </form>
                     </div>
-                    <div>
+                    {{-- <div>
                         <label> {{\App\CPU\translate('inhouse_orders_only')}} : </label>
                         <label class="switch ml-3">
                             <input type="checkbox" class="status"
                                    onclick="filter_order()" {{session()->has('show_inhouse_orders') && session('show_inhouse_orders')==1?'checked':''}}>
                             <span class="slider round"></span>
                         </label>
-                    </div>
+                    </div> --}}
                 </div>
                 <!-- End Row -->
             </div>

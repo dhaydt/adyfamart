@@ -26,7 +26,7 @@ class OrderController extends Controller
         if ($admin_type == 'reseller') {
             $id_mitra = session()->get('id_reseller');
             if (session()->has('show_inhouse_orders') && session('show_inhouse_orders') == 1) {
-                $query = Order::with('mitra')->where('id_mitra', $id_mitra)->whereHas('details', function ($query) {
+                $query = Order::with('mitra', 'customer')->where('id_mitra', $id_mitra)->whereHas('details', function ($query) {
                     $query->whereHas('product', function ($query) {
                         $query->where('added_by', 'admin');
                     });
@@ -44,7 +44,13 @@ class OrderController extends Controller
                         foreach ($key as $value) {
                             $q->orWhere('id', 'like', "%{$value}%")
                                 ->orWhere('order_status', 'like', "%{$value}%")
+                                ->orWhere('id_mitra', 'like', "%{$value}%")
                                 ->orWhere('transaction_ref', 'like', "%{$value}%");
+                        }
+                    })->orWhereHas('customer', function ($filter) use ($key) {
+                        foreach ($key as $val) {
+                            $filter->where('id_member', 'like', "%{$val}%")
+                            ->orWhere('f_name', 'like', "%{$val}%");
                         }
                     });
                     $query_param = ['search' => $request['search']];
@@ -73,9 +79,14 @@ class OrderController extends Controller
                                 ->orWhere('order_status', 'like', "%{$value}%")
                                 ->orWhere('transaction_ref', 'like', "%{$value}%");
                         }
+                    })->orWhereHas('customer', function ($filter) use ($key) {
+                        foreach ($key as $val) {
+                            $filter->where('id_member', 'like', "%{$val}%")
+                            ->orWhere('f_name', 'like', "%{$val}%");
+                        }
                     });
                     $query_param = ['search' => $request['search']];
-                    // dd($query_param);
+                    // dd('reseller2', $query_param);
                 }
 
                 if ($request->has('start-date')) {
@@ -89,7 +100,7 @@ class OrderController extends Controller
             }
         } elseif ($admin_type == 'admin') {
             if (session()->has('show_inhouse_orders') && session('show_inhouse_orders') == 1) {
-                $query = Order::with('mitra')->whereHas('details', function ($query) {
+                $query = Order::with('mitra', 'customer')->whereHas('details', function ($query) {
                     $query->whereHas('product', function ($query) {
                         $query->where('added_by', 'admin');
                     });
@@ -108,6 +119,11 @@ class OrderController extends Controller
                             $q->orWhere('id', 'like', "%{$value}%")
                                 ->orWhere('order_status', 'like', "%{$value}%")
                                 ->orWhere('transaction_ref', 'like', "%{$value}%");
+                        }
+                    })->orWhereHas('customer', function ($k) use ($key) {
+                        foreach ($key as $value) {
+                            $k->where('id_member', 'like', "%{$value}%")
+                            ->orWhere('f_name', 'like', "%{$value}%");
                         }
                     });
                     $query_param = ['search' => $request['search']];
@@ -129,6 +145,7 @@ class OrderController extends Controller
                 }
 
                 if ($request->has('search')) {
+                    // dd('else', $orders->get());
                     $key = explode(' ', $request['search']);
                     $orders = $orders->where(function ($q) use ($key) {
                         foreach ($key as $value) {
@@ -136,9 +153,18 @@ class OrderController extends Controller
                                 ->orWhere('order_status', 'like', "%{$value}%")
                                 ->orWhere('transaction_ref', 'like', "%{$value}%");
                         }
+                    })->orWhereHas('customer', function ($filter) use ($key) {
+                        foreach ($key as $val) {
+                            $filter->where('id_member', 'like', "%{$val}%")
+                            ->orWhere('f_name', 'like', "%{$val}%");
+                        }
+                    })->orWhereHas('mitra', function ($filter) use ($key) {
+                        foreach ($key as $val) {
+                            $filter->where('code_admin', 'like', "%{$val}%")
+                            ->orWhere('name', 'like', "%{$val}%");
+                        }
                     });
                     $query_param = ['search' => $request['search']];
-                    // dd($query_param);
                 }
 
                 if ($request->has('start-date')) {

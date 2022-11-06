@@ -344,7 +344,7 @@
     function maintenance_mode() {
             Swal.fire({
                 title: '{{\App\CPU\translate('Are you sure')}}?',
-                text: '{{\App\CPU\translate('Be careful before you turn on/off maintenance mode')}}',
+                text: '{{\App\CPU\translate('cut off transactions will cut off the user transaction process!')}}',
                 type: 'warning',
                 showCancelButton: true,
                 cancelButtonColor: 'default',
