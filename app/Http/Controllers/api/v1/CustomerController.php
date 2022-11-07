@@ -195,7 +195,12 @@ class CustomerController extends Controller
     {
         $orders = Order::where(['customer_id' => $request->user()->id])->orderBy('created_at', 'asc')->get();
         $orders->map(function ($data) {
+            $status = $data['order_status'];
+            if ($status == 'returned') {
+                $status = 'reject';
+            }
             $data['shipping_address_data'] = json_decode($data['shipping_address_data']);
+            $data['order_status'] = $status;
 
             return $data;
         });
