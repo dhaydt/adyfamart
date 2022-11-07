@@ -220,8 +220,13 @@ class CustomerController extends Controller
 
         $details = OrderDetail::with('order')->where(['order_id' => $request['order_id']])->get();
         $details->map(function ($query) {
+            $status = $query['order']['order_status'];
+            if ($status == 'returned') {
+                $status = 'reject';
+            }
             $query['variation'] = json_decode($query['variation'], true);
             $query['product_details'] = Helpers::product_data_formatting(json_decode($query['product_details'], true));
+            $query['order']['order_status'] = $status;
 
             return $query;
         });
