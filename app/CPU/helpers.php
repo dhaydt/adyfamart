@@ -886,50 +886,31 @@ class Helpers
             'content-type: application/json',
         ];
 
-        $image = asset('storage/app/public/notification').'/'.$data['image'] ? asset('storage/app/public/notification').'/'.$data['image'] : asset('storage/notification'.'/'.$data['image']);
-        // $image = asset('assets/front-end/img/fcm.png');
+        // $image = asset('storage/app/public/notification').'/'.$data['image'] ? asset('storage/app/public/notification').'/'.$data['image'] : asset('storage/notification'.'/'.$data['image']);
 
-        $user = User::pluck('cm_firebase_token');
-        foreach ($user as $s) {
-            if ($s !== null) {
-                $notif = [
-                    'title' => $data->title ?? '',
-                    'body' => $data->description ?? '',
-                    'image' => $image,
-                    'title_loc_key' => '',
-                    'is_read' => 0,
-                    'icon' => 'new',
-                    'sound' => 'default',
+        $msg = [
+                'body' => 'abc',
+                'title' => 'Hello from Api',
+                'vibrate' => 1,
+                'sound' => 1,
+            ];
+
+        $fields = [
+                    'to' => '/topics/alerts',
+                    'notification' => $msg,
                 ];
 
-                $postdata = '{
-                    "to" : "'.$s.'",
-                    "data" : {
-                        "title":"'.$data->title.'",
-                        "body" : "'.$data->description.'",
-                        "image" : "'.$image.'",
-                        "is_read": 0
-                    },
-                    "notification" : '.json_encode($notif).'
-                }';
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
+        $result = curl_exec($ch);
+        curl_close($ch);
 
-                $ch = curl_init();
-                $timeout = 120;
-                curl_setopt($ch, CURLOPT_URL, $url);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-
-                // Get URL content
-                $result = curl_exec($ch);
-                // close handle to release resources
-                curl_close($ch);
-
-                return $result;
-            }
-        }
+        return $result;
     }
 
     public static function get_seller_by_token($request)
