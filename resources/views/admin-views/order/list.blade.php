@@ -188,7 +188,7 @@
                                 {{str_replace('_',' ',$order['payment_method'])}}
                             </td> --}}
                             <td> {{\App\CPU\BackEndHelper::set_symbol(\App\CPU\BackEndHelper::usd_to_currency($order->order_amount))}}</td>
-                            <td>{{ \App\CPU\Helpers::getSaldoUser($order->customer_id) }}</td>
+                            <td>{{ \App\CPU\Helpers::getSaldoUser($order->customer_id) ?? 'Invalid Customer Data' }}</td>
                             <td class="text-capitalize">
                                 @if($order['order_status']=='pending')
                                     <span class="badge badge-soft-info ml-2 ml-sm-3">
