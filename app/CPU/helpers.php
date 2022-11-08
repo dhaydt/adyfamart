@@ -893,8 +893,8 @@ class Helpers
         foreach ($user as $s) {
             if ($s !== null) {
                 $notif = [
-                    'title' => $data->title ?? '',
-                    'body' => $data->description ?? '',
+                    'title' => '',
+                    'body' => '',
                     'image' => '',
                     'title_loc_key' => '',
                     'is_read' => 0,
@@ -905,8 +905,8 @@ class Helpers
                 $postdata = '{
                     "to" : "'.$s.'",
                     "data" : {
-                        "title":"'.$data->title.'",
-                        "body" : "'.$data->description.'",
+                        "title":"",
+                        "body" : "",
                         "image" : "",
                         "is_read": 0
                     },
