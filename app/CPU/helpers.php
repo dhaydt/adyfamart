@@ -887,7 +887,7 @@ class Helpers
         ];
 
         // $image = asset('storage/app/public/notification').'/'.$data['image'] ? asset('storage/app/public/notification').'/'.$data['image'] : asset('storage/notification'.'/'.$data['image']);
-        // $image = asset('assets/front-end/img/fcm.png');
+        $img = asset('assets/front-end/img/notif.png');
 
         $user = User::pluck('cm_firebase_token');
         foreach ($user as $s) {
@@ -895,19 +895,19 @@ class Helpers
                 $notif = [
                     'title' => '',
                     'body' => '',
-                    'image' => '',
+                    'image' => $img,
                     'title_loc_key' => '',
                     'is_read' => 0,
-                    'icon' => 'new',
+                    'icon' => $img,
                     'sound' => 'default',
                 ];
 
                 $postdata = '{
                     "to" : "'.$s.'",
                     "data" : {
-                        "title":"",
-                        "body" : "",
-                        "image" : "",
+                        "title":"'.$data->title.'",
+                        "body" : "'.$data->description.'",
+                        "image" : "'.$img.'",
                         "is_read": 0
                     },
                     "notification" : '.json_encode($notif).'
