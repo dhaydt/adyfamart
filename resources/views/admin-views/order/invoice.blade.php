@@ -322,6 +322,10 @@
             color: white !important;
         }
 
+        .text-dark{
+            color: black !important;
+        }
+
         .bs-0 {
             border-spacing: 0;
         }
@@ -416,9 +420,9 @@
         <table class="customers bs-0">
             <thead>
             <tr class="for-th">
-                <th class="for-th bg-primary">{{\App\CPU\translate('no.')}}</th>
-                <th class="for-th bg-primary">{{\App\CPU\translate('item_description')}}</th>
-                <th class="for-th bg-primary">{{\App\CPU\translate('Mitra')}}</th>
+                <th class="for-th bg-primary text-dark">{{\App\CPU\translate('no.')}}</th>
+                <th class="for-th bg-primary text-dark">{{\App\CPU\translate('item_description')}}</th>
+                <th class="for-th bg-primary text-dark">{{\App\CPU\translate('Mitra')}}</th>
                 <th class="for-th bg-secondary for-th-font-bold" style="color: black">
                     {{\App\CPU\translate('unit_price')}}
                 </th>
