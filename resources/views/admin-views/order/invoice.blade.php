@@ -20,8 +20,14 @@
             top: expression((0-(footer.offsetHeight)+(document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body.clientHeight)+(ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop))+'px');
         }
 
+        .container{
+            width: 900px;
+        }
+
         body {
             font-size: .875rem;
+            display: flex;
+            justify-content: center;
         }
 
         .gry-color *,
@@ -131,7 +137,7 @@
             text-align: left;
             color: white;
             {{--background-color:  {{$web_config['primary_color']}};--}}
-              background-color: {{$web_config['primary_color']}};
+            background-color: {{$web_config['primary_color']}};
         }
 
         .bg-secondary {
@@ -163,8 +169,6 @@
         .for-th {
             color: white;
         {{--border: 1px solid  {{$web_config['primary_color']}};--}}
-
-
         }
 
         .for-th-font-bold {
@@ -329,6 +333,9 @@
         .bs-0 {
             border-spacing: 0;
         }
+        .text-capitalize{
+            text-transform: capitalize;
+        }
 
 
     </style>
@@ -349,6 +356,8 @@
     $company_mobile_logo =BusinessSetting::where('type', 'company_mobile_logo')->first()->value;
 @endphp
 
+<div class="container">
+
 <div class="first" style="display: block; height:auto !important;background-color: #E6E6E6">
     <table class="content-position">
         <tr>
@@ -368,11 +377,11 @@
 
     <table class="bs-0">
         <tr>
-            <th class="bg-primary content-position-y" style="padding-right: 0; height: 44px; text-align: left">
+            <th class="bg-secondary text-bold content-position-y" style="padding-right: 0; height: 44px; text-align: left">
                 <div>
-                    <span class="h4 inline text-white text-uppercase">{{\App\CPU\translate('invoice')}} # </span>
+                    <span class="h4 inline text-dark text-bold text-uppercase">{{\App\CPU\translate('invoice')}} # </span>
                     <span class="inline">
-                        <span class="h4 text-white" style="display: inline">{{ $order->id }}</span>
+                        <span class="h4 text-dark" style="display: inline">{{ $order->id }}</span>
                     </span>
                 </div>
             </th>
@@ -399,9 +408,8 @@
                 </td>
                 <td>
                     <div class="h4 montserrat-normal-600">
-                        <p style=" margin-top: 6px; margin-bottom:0px;">{{$order->customer['f_name']}}</p>
-                        <p style=" margin-top: 6px; margin-bottom:0px;">{{$order->customer['email']}}</p>
-                        <p style=" margin-top: 6px; margin-bottom:0px;">{{$order->customer['phone']}}</p>
+                        <p style=" margin-top: 6px; margin-bottom:0px;" class="text-capitalize">{{$order->mitra['name']}}</p>
+                        <p style=" margin-top: 6px; margin-bottom:0px;" class="text-capitalize">{{$order->mitra['address']}}</p>
                         {{-- <p style=" margin-top: 6px; margin-bottom:0px;">{{$order->shippingAddress ? $order->shippingAddress['address'] : ""}}</p>
                         <p style=" margin-top: 6px; margin-bottom:0px;">{{$order->shippingAddress ? $order->shippingAddress['city'] : ""}} {{$order->shippingAddress ? $order->shippingAddress['zip'] : ""}}</p>
                         <p style=" margin-top: 6px; margin-bottom:0px;">{{$order->shippingAddress ? $order->shippingAddress['country'] : ""}}</p> --}}
@@ -420,9 +428,9 @@
         <table class="customers bs-0">
             <thead>
             <tr class="for-th">
-                <th class="for-th bg-primary text-dark">{{\App\CPU\translate('no.')}}</th>
-                <th class="for-th bg-primary text-dark">{{\App\CPU\translate('item_description')}}</th>
-                <th class="for-th bg-primary text-dark">{{\App\CPU\translate('Mitra')}}</th>
+                <th class="for-th bg-secondary text-bold" style="color: #000 !important; font-weight: 700;">{{\App\CPU\translate('no.')}}</th>
+                <th class="for-th bg-secondary" style="color: #000 !important; font-weight: 700;">{{\App\CPU\translate('item_description')}}</th>
+                <th class="for-th bg-secondary" style="color: #000 !important; font-weight: 700;">{{\App\CPU\translate('Mitra')}}</th>
                 <th class="for-th bg-secondary for-th-font-bold" style="color: black">
                     {{\App\CPU\translate('unit_price')}}
                 </th>
@@ -479,11 +487,11 @@
 <div class="content-position-y" style=" display:block; height:auto !important;margin-top: 40px">
     <table>
         <tr>
-            <th style="text-align: left; vertical-align: text-top;">
+            {{-- <th style="text-align: left; vertical-align: text-top;">
                 <h4 style="color: #130505 !important; margin:0px;">{{\App\CPU\translate('payment_details')}}</h4>
                 <p style="color: #414141 !important ; padding-top:5px;">{{$order->payment_status}}
                     , {{date('y-m-d',strtotime($order['created_at']))}}</p>
-            </th>
+            </th> --}}
 
             <th style="text-align: right">
                 <table style="width: 46%;margin-left:41%; display: inline " class="text-right sm-padding strong bs-0">
@@ -526,7 +534,7 @@
 <br>
 <br><br><br>
 
-<div class="row">
+{{-- <div class="row">
     <section>
         <table style="width: 100%">
             <tr>
@@ -548,6 +556,7 @@
             </tr>
         </table>
     </section>
+</div> --}}
 </div>
 
 </body>
