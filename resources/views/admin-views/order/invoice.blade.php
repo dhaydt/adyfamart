@@ -410,6 +410,8 @@
                     <div class="h4 montserrat-normal-600">
                         <p style=" margin-top: 6px; margin-bottom:0px;" class="text-capitalize">{{$order->mitra['name']}}</p>
                         <p style=" margin-top: 6px; margin-bottom:0px;" class="text-capitalize">{{$order->mitra['address']}}</p>
+                        <p style=" margin-top: 12px; margin-bottom:0px;" class="text-capitalize">{{$order->customer['f_name']}}</p>
+                        <p style=" margin-top: 6px; margin-bottom:0px;" class="text-capitalize">{{$order->customer['phone']}}</p>
                         {{-- <p style=" margin-top: 6px; margin-bottom:0px;">{{$order->shippingAddress ? $order->shippingAddress['address'] : ""}}</p>
                         <p style=" margin-top: 6px; margin-bottom:0px;">{{$order->shippingAddress ? $order->shippingAddress['city'] : ""}} {{$order->shippingAddress ? $order->shippingAddress['zip'] : ""}}</p>
                         <p style=" margin-top: 6px; margin-bottom:0px;">{{$order->shippingAddress ? $order->shippingAddress['country'] : ""}}</p> --}}
