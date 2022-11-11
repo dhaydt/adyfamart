@@ -20,13 +20,13 @@ class ExportController extends Controller
                 $query->whereHas('product', function ($query) {
                     $query->where('added_by', 'admin');
                 });
-            })->with(['customer'])->with(['details'])->get();
+            })->with(['customer'])->with(['details', 'mitra'])->get();
         } else {
             $orders = Order::whereBetween('created_at', [$start, $end])->whereHas('details', function ($query) {
                 $query->whereHas('product', function ($query) {
                     $query->where('added_by', 'admin');
                 });
-            })->with(['customer'])->with(['details'])->get();
+            })->with(['customer'])->with(['details', 'mitra'])->get();
         }
 
         // dd($orders);
@@ -69,14 +69,13 @@ class ExportController extends Controller
 
             return [
             'order_date' => date('d F Y, h:i:s A', strtotime($order->created_at)),
-            'delivery_date' => date('d F Y', strtotime($order->delivery_date)),
-            'customer_name' => $arr->contact_person_name,
+            'customer_name' => $order->customer->f_name,
+            'mitra' => $order->mitra->name,
             'product_name' => $prod->toArray(),
             'variation' => $var->toArray(),
             'qty' => $qty->toArray(),
             'price' => $order->order_amount,
             'order_no' => $detail[0]['order_id'],
-            'payment' => $order->payment_method,
         ];
         });
         $data = [];
@@ -89,14 +88,13 @@ class ExportController extends Controller
                 $qty = $ex['qty'];
                 $item = [
                     'order_date' => $ex['order_date'],
-                    'delivery_date' => $ex['delivery_date'],
                     'customer_name' => $ex['customer_name'],
+                    'mitra' => $ex['mitra'],
                     'product_name' => $product[$in],
                     'variation' => $var[$in],
                     'qty' => $qty[$in],
                     'price' => $ex['price'],
                     'order_no' => $ex['order_no'],
-                    'payment' => $ex['payment'],
                 ];
                 array_push($data, $item);
             }

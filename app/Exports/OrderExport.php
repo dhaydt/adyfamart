@@ -43,14 +43,13 @@ class OrderExport implements FromCollection, WithHeadings, WithColumnWidths, Wit
         return [
             // 'No',
             'Order Date',
-            'Delivery Date',
             'Customer Name',
+            'Mitra',
             'Product Name',
             'Variation',
             'Qty',
             'Price',
             'Order No',
-            'Methode Payment',
         ];
     }
 
