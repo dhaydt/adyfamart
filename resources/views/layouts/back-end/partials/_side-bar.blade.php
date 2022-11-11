@@ -385,7 +385,7 @@
                                         class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{\App\CPU\translate('coupons')}}</span>
                                 </a>
                             </li>
-                            <li class="navbar-vertical-aside-has-menu {{Request::is('admin/notification*')?'active':''}}">
+                            {{-- <li class="navbar-vertical-aside-has-menu {{Request::is('admin/notification*')?'active':''}}">
                                 <a class="js-navbar-vertical-aside-menu-link nav-link"
                                    href="{{route('admin.notification.add-new')}}" title="">
                                     <i class="tio-notifications-on-outlined nav-icon"></i>
@@ -393,7 +393,7 @@
                                         {{\App\CPU\translate('push_notification')}}
                                     </span>
                                 </a>
-                            </li>
+                            </li> --}}
                             {{-- <li class="navbar-vertical-aside-has-menu {{Request::is('admin/deal/flash')?'active':''}}">
                                 <a class="js-navbar-vertical-aside-menu-link nav-link"
                                    href="{{route('admin.deal.flash')}}">
