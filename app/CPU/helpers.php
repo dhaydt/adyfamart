@@ -856,8 +856,8 @@ class Helpers
                 "image" : "'.$img.'",
                 "order_id":"'.$data['order_id'].'",
                 "is_read": 0
-              },
-              "notification" : '.json_encode($notif).'
+            },
+            "notification" : '.json_encode($notif).'
         }';
 
         $ch = curl_init();

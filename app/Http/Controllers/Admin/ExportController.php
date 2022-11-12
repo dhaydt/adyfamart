@@ -15,18 +15,35 @@ class ExportController extends Controller
         $start = $request['start-date'];
         $end = $request['end-date'];
 
-        if ($start == $end) {
-            $orders = Order::where('created_at', 'like', "%{$start}%")->whereHas('details', function ($query) {
-                $query->whereHas('product', function ($query) {
-                    $query->where('added_by', 'admin');
-                });
-            })->with(['customer'])->with(['details', 'mitra'])->get();
+        if (session()->get('admin_type') == 'reseller') {
+            $mitra = session()->get('id_reseller');
+            if ($start == $end) {
+                $orders = Order::where('created_at', 'like', "%{$start}%")->where('id_mitra', $mitra)->whereHas('details', function ($query) {
+                    $query->whereHas('product', function ($query) {
+                        $query->where('added_by', 'admin');
+                    });
+                })->with(['customer'])->with(['details', 'mitra'])->get();
+            } else {
+                $orders = Order::whereBetween('created_at', [$start, $end])->where('id_mitra', $mitra)->whereHas('details', function ($query) {
+                    $query->whereHas('product', function ($query) {
+                        $query->where('added_by', 'admin');
+                    });
+                })->with(['customer'])->with(['details', 'mitra'])->get();
+            }
         } else {
-            $orders = Order::whereBetween('created_at', [$start, $end])->whereHas('details', function ($query) {
-                $query->whereHas('product', function ($query) {
-                    $query->where('added_by', 'admin');
-                });
-            })->with(['customer'])->with(['details', 'mitra'])->get();
+            if ($start == $end) {
+                $orders = Order::where('created_at', 'like', "%{$start}%")->whereHas('details', function ($query) {
+                    $query->whereHas('product', function ($query) {
+                        $query->where('added_by', 'admin');
+                    });
+                })->with(['customer'])->with(['details', 'mitra'])->get();
+            } else {
+                $orders = Order::whereBetween('created_at', [$start, $end])->whereHas('details', function ($query) {
+                    $query->whereHas('product', function ($query) {
+                        $query->where('added_by', 'admin');
+                    });
+                })->with(['customer'])->with(['details', 'mitra'])->get();
+            }
         }
 
         // dd($orders);
