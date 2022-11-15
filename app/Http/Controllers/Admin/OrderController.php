@@ -226,7 +226,7 @@ class OrderController extends Controller
             return response()->json($request->order_status);
         }
 
-        if ($request->order_status == 'delivered' && $order['seller_id'] != null) {
+        if ($request->order_status == 'processing' && $order['seller_id'] != null) {
             OrderManager::wallet_manage_on_order_status_change($order, 'admin');
         }
 

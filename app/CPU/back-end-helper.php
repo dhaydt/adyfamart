@@ -79,7 +79,7 @@ class BackEndHelper
 
     public static function max_earning()
     {
-        $data = Order::where(['order_status' => 'delivered'])->select('id', 'created_at', 'order_amount')
+        $data = Order::where(['order_status' => 'processing'])->select('id', 'created_at', 'order_amount')
             ->get()
             ->groupBy(function ($date) {
                 return Carbon::parse($date->created_at)->format('m');
