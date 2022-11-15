@@ -27,10 +27,12 @@ class CustomerController extends Controller
 
         $mitra = Helpers::getMitra($user['reseller_id']);
         $saldo = $mitra->wallet->saldo - $belanja;
+        $mitraName = $mitra->name;
         if ($saldo < 0) {
             $saldo = 0;
         }
         $user['saldo'] = $saldo;
+        $user['mitra_name'] = $mitraName;
 
         return response()->json($user, 200);
     }

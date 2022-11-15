@@ -50,7 +50,7 @@ class OrderController extends Controller
             if ($order_id == 'limited') {
                 return [
                     'status' => 2,
-                    'message' => translate('You_have_reached_the_purchase_limit!'),
+                    'message' => 'Anda sudah mencapai limit pembelian!',
                 ];
             }
             array_push($order_ids, $order_id);
