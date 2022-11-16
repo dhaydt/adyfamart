@@ -120,7 +120,7 @@
                         </th>
                         <th class=" ">{{\App\CPU\translate('Order')}}</th>
                         <th>{{\App\CPU\translate('Date')}}</th>
-                        <th>{{\App\CPU\translate('ID_Member')}}</th>
+                        <th>{{\App\CPU\translate('NIK')}}</th>
                         <th>{{\App\CPU\translate('customer_name')}}</th>
                         @if (session()->get('admin_type') !== 'reseller')
                             <th>{{\App\CPU\translate('Mitra')}}</th>

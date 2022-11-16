@@ -199,7 +199,7 @@
                            #
                         </th>
                         <th class="table-column-pl-0 text-center">{{\App\CPU\translate('Name')}}</th>
-                        <th class="table-column-pl-0 text-center">{{\App\CPU\translate('ID_Member')}}</th>
+                        <th class="table-column-pl-0 text-center">{{\App\CPU\translate('NIK')}}</th>
                         <th class="text-center">{{\App\CPU\translate('Mitra')}}</th>
                         <th class="text-center">{{\App\CPU\translate('Phone')}}</th>
                         <th class="text-center">{{\App\CPU\translate('Total')}} {{\App\CPU\translate('Order')}} </th>
